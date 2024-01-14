@@ -17,6 +17,7 @@ void main() {
             ],
             imageIndex: 0,
             previousImageIndex: 0,
-            labels: ["takoyaki", "sushi", "gyoza"]));
+            labels: ["takoyaki", "sushi", "gyoza"],
+            writing: false));
   });
 }

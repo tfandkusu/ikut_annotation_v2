@@ -8,5 +8,6 @@ class MainUiModel with _$MainUiModel {
       {required List<LabeledImage> images,
       required int imageIndex,
       required int previousImageIndex,
-      required List<String> labels}) = _MainUiModel;
+      required List<String> labels,
+      required bool writing}) = _MainUiModel;
 }
