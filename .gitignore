@@ -44,3 +44,6 @@ app.*.map.json
 
 # Freezd
 *.freezed.dart
+
+# Riverpod
+*.g.dart
