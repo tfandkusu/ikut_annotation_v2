@@ -106,4 +106,55 @@ void main() {
               writing: false));
     });
   });
+
+  when("setWriting", () {
+    then("update writing", () {
+      stateNotifier.setLoaded(
+        images,
+        labels,
+      );
+      stateNotifier.setWriting(true);
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              writing: true));
+      stateNotifier.setWriting(false);
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              writing: false));
+    });
+  });
+
+  when("update", () {
+    then("label is updated", () {
+      stateNotifier.setLoaded(
+        images,
+        labels,
+      );
+      stateNotifier.move(2);
+      stateNotifier.update(1);
+      expect(
+          getState(),
+          const MainUiModel(
+              images: [
+                LabeledImage(path: "img/01.png", label: "sushi"),
+                LabeledImage(path: "img/02.png", label: "takoyaki"),
+                LabeledImage(path: "img/03.png", label: "sushi"),
+                LabeledImage(path: "img/04.png", label: "sushi"),
+              ],
+              imageIndex: 2,
+              previousImageIndex: 0,
+              labels: labels,
+              writing: false));
+    });
+  });
 }
