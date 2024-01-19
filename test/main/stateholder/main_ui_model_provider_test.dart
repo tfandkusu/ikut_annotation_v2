@@ -1,23 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart';
-import 'package:ikut_annotation_v2/model/label_image.dart';
 
 import '../../util/provider_container.dart';
 
 void main() {
-  test('mainUiModelProvider', () {
+  test("mainUiModelProvider", () {
     final container = createContainer();
     final mainUiModel = container.read(mainUiModelProvider);
     expect(
         mainUiModel,
         const MainUiModel(
-            images: [
-              LabeledImage(path: "image_01.png", label: "sushi"),
-            ],
+            images: [],
             imageIndex: 0,
             previousImageIndex: 0,
-            labels: ["takoyaki", "sushi", "gyoza"],
+            labels: [],
             writing: false));
   });
 }
