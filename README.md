@@ -2,7 +2,7 @@
 
 A simple annotation tool for image classification.
 
-<img src="https://raw.githubusercontent.com/tfandkusu/ikut_annotation/main/doc/movie.gif">
+![movie](https://github.com/tfandkusu/ikut_annotation_v2/assets/16898831/29c08451-fcdb-4d33-98d3-2785afea1c60)
 
 # How to build
 
