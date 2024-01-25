@@ -12,9 +12,13 @@ Repository repository(RepositoryRef ref) {
 }
 
 class Repository {
-  Future<List<String>> loadLabels() async {
+  static const String labelFileName = 'label.txt';
+
+  static const String resultFileName = 'result.csv';
+
+  Future<List<String>> loadLabels({String fileName = labelFileName}) async {
     final dir = Directory.current.path;
-    final file = File('$dir/label.txt');
+    final file = File('$dir/$fileName');
     final csvString = await file.readAsString();
     final fields = const CsvToListConverter(
       eol: '\n',
@@ -23,9 +27,10 @@ class Repository {
     return labels;
   }
 
-  Future<List<LabeledImage>> loadResults(List<String> labels) async {
+  Future<List<LabeledImage>> loadResults(List<String> labels,
+      {String fileName = resultFileName}) async {
     final dir = Directory.current.path;
-    final file = File('$dir/result.csv');
+    final file = File('$dir/$fileName');
     final csvString = await file.readAsString();
     final fields = const CsvToListConverter(
       eol: '\n',

@@ -15,24 +15,49 @@ void main() {
     container = createContainer();
     repository = container.read(repositoryProvider);
   });
-  when("loadLabels", () {
-    then("return labels", () async {
-      final labels = await repository.loadLabels();
-      expect(labels, ["takoyaki", "sushi", "gyoza", "other"]);
+  given("File exists", () {
+    when("loadLabels", () {
+      then("It returns labels", () async {
+        final labels = await repository.loadLabels();
+        expect(labels, ["takoyaki", "sushi", "gyoza", "other"]);
+      });
+    });
+    when("loadResults", () {
+      then("It returns list of LabelImage", () async {
+        final dir = Directory.current.path.toString();
+        final results = await repository
+            .loadResults(["takoyaki", "sushi", "gyoza", "other"]);
+        expect(results.length, 300);
+        expect(results[0],
+            LabeledImage(path: "$dir/image/1002013.jpg", label: "takoyaki"));
+        expect(results[4],
+            LabeledImage(path: "$dir/image/100332.jpg", label: "sushi"));
+        expect(results[299],
+            LabeledImage(path: "$dir/image/1399892.jpg", label: "takoyaki"));
+      });
     });
   });
-  when("loadResults", () {
-    then("return list of LabelImage", () async {
-      final dir = Directory.current.path.toString();
-      final results =
-          await repository.loadResults(["takoyaki", "sushi", "gyoza", "other"]);
-      expect(results.length, 300);
-      expect(results[0],
-          LabeledImage(path: "$dir/image/1002013.jpg", label: "takoyaki"));
-      expect(results[4],
-          LabeledImage(path: "$dir/image/100332.jpg", label: "sushi"));
-      expect(results[299],
-          LabeledImage(path: "$dir/image/1399892.jpg", label: "takoyaki"));
+  given("File does not exists", () {
+    when("loadLabels", () {
+      then("IOException", () async {
+        try {
+          await repository.loadLabels(fileName: "notExist.txt");
+          fail("It should throw error");
+        } catch (e) {
+          expect(e, isA<IOException>());
+        }
+      });
+    });
+    when("loadResults", () {
+      then("IOException", () async {
+        try {
+          await repository.loadResults(["takoyaki", "sushi", "gyoza", "other"],
+              fileName: "notExist.txt");
+          fail("It should throw error");
+        } catch (e) {
+          expect(e, isA<IOException>());
+        }
+      });
     });
   });
 }
