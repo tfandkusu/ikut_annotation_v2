@@ -4,6 +4,8 @@ import 'package:csv/csv.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../model/annotation_task.dart';
+
 part 'repository.g.dart';
 
 @riverpod
@@ -16,7 +18,15 @@ class Repository {
 
   static const String resultFileName = 'result.csv';
 
-  Future<List<String>> loadLabels({String fileName = labelFileName}) async {
+  Future<AnnotationTask> load(
+      {String labelFileName = labelFileName,
+      String resultFileName = resultFileName}) async {
+    final labels = await _loadLabels(fileName: labelFileName);
+    final results = await _loadResults(labels, fileName: resultFileName);
+    return AnnotationTask(labels: labels, results: results);
+  }
+
+  Future<List<String>> _loadLabels({String fileName = labelFileName}) async {
     final dir = Directory.current.path;
     final file = File('$dir/$fileName');
     final csvString = await file.readAsString();
@@ -27,7 +37,7 @@ class Repository {
     return labels;
   }
 
-  Future<List<LabeledImage>> loadResults(List<String> labels,
+  Future<List<LabeledImage>> _loadResults(List<String> labels,
       {String fileName = resultFileName}) async {
     final dir = Directory.current.path;
     final file = File('$dir/$fileName');
