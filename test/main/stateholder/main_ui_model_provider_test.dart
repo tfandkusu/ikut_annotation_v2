@@ -15,6 +15,7 @@ void main() {
             imageIndex: 0,
             previousImageIndex: 0,
             labels: [],
-            writing: false));
+            writing: false,
+            error: null));
   });
 }

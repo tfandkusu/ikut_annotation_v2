@@ -1,5 +1,6 @@
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/my_error.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'main_ui_model_state_notifier_provider.g.dart';
 
@@ -11,7 +12,12 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       imageIndex: 0,
       previousImageIndex: 0,
       labels: [],
-      writing: false);
+      writing: false,
+      error: null);
+
+  void setError(MyError? error) {
+    state = state.copyWith(error: error);
+  }
 
   void setLoaded(List<LabeledImage> images, List<String> labels) {
     state = state.copyWith(images: images, labels: labels);

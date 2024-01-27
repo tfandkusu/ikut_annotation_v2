@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/my_error.dart';
 
 import '../../util/helper.dart';
 import '../../util/provider_container.dart';
@@ -31,7 +32,8 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: [],
-              writing: false));
+              writing: false,
+              error: null));
       stateNotifier.setLoaded(
         images,
         labels,
@@ -43,7 +45,8 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              writing: false,
+              error: null));
     });
   });
   when("move", () {
@@ -60,7 +63,8 @@ void main() {
               imageIndex: 1,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              writing: false,
+              error: null));
       stateNotifier.move(2);
       expect(
           getState(),
@@ -69,7 +73,8 @@ void main() {
               imageIndex: 3,
               previousImageIndex: 1,
               labels: labels,
-              writing: false));
+              writing: false,
+              error: null));
     });
   });
   when("move under zero", () {
@@ -86,7 +91,8 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              writing: false,
+              error: null));
     });
   });
   when("move over images.count", () {
@@ -103,7 +109,8 @@ void main() {
               imageIndex: 3,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              writing: false,
+              error: null));
     });
   });
 
@@ -121,7 +128,8 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: true));
+              writing: true,
+              error: null));
       stateNotifier.setWriting(false);
       expect(
           getState(),
@@ -130,7 +138,8 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              writing: false,
+              error: null));
     });
   });
 
@@ -154,7 +163,26 @@ void main() {
               imageIndex: 2,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              writing: false,
+              error: null));
+    });
+  });
+  when("setError", () {
+    then("error is updated", () {
+      stateNotifier.setLoaded(
+        images,
+        labels,
+      );
+      stateNotifier.setError(const MyError.readFile("label.txt"));
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              writing: false,
+              error: MyError.readFile("label.txt")));
     });
   });
 }
