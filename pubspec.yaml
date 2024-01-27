@@ -41,6 +41,7 @@ dependencies:
   flutter_hooks: ^0.20.4
   flutter_riverpod: ^2.4.9
   csv: ^5.1.1
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:

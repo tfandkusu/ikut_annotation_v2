@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:path/path.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../model/annotation_task.dart';
@@ -24,6 +25,17 @@ class Repository {
     final labels = await _loadLabels(fileName: labelFileName);
     final results = await _loadResults(labels, fileName: resultFileName);
     return AnnotationTask(labels: labels, results: results);
+  }
+
+  Future<void> saveResults(List<LabeledImage> results,
+      {String resultFileName = resultFileName}) async {
+    final csvString = const ListToCsvConverter().convert(results.map((image) {
+      final name = basename(image.path);
+      return [name, image.label];
+    }).toList());
+    final dir = Directory.current.path;
+    final file = File('$dir/$resultFileName');
+    file.writeAsString(csvString.replaceAll("\r\n", "\n"));
   }
 
   Future<List<String>> _loadLabels({String fileName = labelFileName}) async {

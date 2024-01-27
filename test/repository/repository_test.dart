@@ -30,6 +30,20 @@ void main() {
             LabeledImage(path: "$dir/image/1399892.jpg", label: "takoyaki"));
       });
     });
+    when("saveResults", () {
+      then("Result file is saved", () async {
+        const testResultFileName = "result_test.csv";
+        final task = await repository.load();
+        final results = task.results;
+        await repository.saveResults(results,
+            resultFileName: testResultFileName);
+        final savedTask =
+            await repository.load(resultFileName: testResultFileName);
+        expect(savedTask.results[0], task.results[0]);
+        final dir = Directory.current.path.toString();
+        await File("$dir/$testResultFileName").delete();
+      });
+    });
   });
   given("Label file does not exists", () {
     when("load", () {
