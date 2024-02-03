@@ -18,7 +18,7 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       error: null);
 
   void setError(MyError? error) {
-    state = state.copyWith(error: error);
+    state = state.copyWith(error: error, progress: false);
   }
 
   void setLoaded(AnnotationTask task) {

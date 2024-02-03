@@ -144,6 +144,7 @@ void main() {
   when("setError", () {
     then("error is updated", () {
       stateNotifier.setLoaded(annotationTask);
+      stateNotifier.setProgressAsTrue();
       stateNotifier.setError(const MyError.readFile("label.txt"));
       expect(
           getState(),
