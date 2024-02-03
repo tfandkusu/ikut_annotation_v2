@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
+import 'package:ikut_annotation_v2/model/annotation_task.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
 import 'package:ikut_annotation_v2/model/my_error.dart';
 
@@ -16,6 +17,7 @@ void main() {
     LabeledImage(path: "img/04.png", label: "sushi"),
   ];
   const labels = ["takoyaki", "sushi", "gyoza"];
+  const annotationTask = AnnotationTask(labels: labels, results: images);
   late ProviderContainer container;
   late MainUiModelStateNotifier stateNotifier;
   setUp(() {
@@ -34,10 +36,7 @@ void main() {
               labels: [],
               writing: false,
               error: null));
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+      stateNotifier.setLoaded(annotationTask);
       expect(
           getState(),
           const MainUiModel(
@@ -51,10 +50,7 @@ void main() {
   });
   when("move", () {
     then("update imageIndex and previous index", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(1);
       expect(
           getState(),
@@ -79,10 +75,7 @@ void main() {
   });
   when("move under zero", () {
     then("update imageIndex to 0", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(-1);
       expect(
           getState(),
@@ -97,10 +90,7 @@ void main() {
   });
   when("move over images.count", () {
     then("update imageIndex to images.count - 1", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(4);
       expect(
           getState(),
@@ -116,10 +106,7 @@ void main() {
 
   when("setWriting", () {
     then("update writing", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.setWriting(true);
       expect(
           getState(),
@@ -145,10 +132,7 @@ void main() {
 
   when("update", () {
     then("label is updated", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(2);
       stateNotifier.update(1);
       expect(
@@ -169,10 +153,7 @@ void main() {
   });
   when("setError", () {
     then("error is updated", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.setError(const MyError.readFile("label.txt"));
       expect(
           getState(),

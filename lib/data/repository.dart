@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/my_error.dart';
+import 'package:ikut_annotation_v2/model/my_exception.dart';
 import 'package:path/path.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -22,20 +24,33 @@ class Repository {
   Future<AnnotationTask> load(
       {String labelFileName = labelFileName,
       String resultFileName = resultFileName}) async {
-    final labels = await _loadLabels(fileName: labelFileName);
-    final results = await _loadResults(labels, fileName: resultFileName);
-    return AnnotationTask(labels: labels, results: results);
+    var labels = <String>[];
+    try {
+      labels = await _loadLabels(fileName: labelFileName);
+    } on IOException {
+      throw MyException(MyError.readFile(labelFileName));
+    }
+    try {
+      final results = await _loadResults(labels, fileName: resultFileName);
+      return AnnotationTask(labels: labels, results: results);
+    } on IOException {
+      throw MyException(MyError.readFile(resultFileName));
+    }
   }
 
   Future<void> saveResults(List<LabeledImage> results,
       {String resultFileName = resultFileName}) async {
-    final csvString = const ListToCsvConverter().convert(results.map((image) {
-      final name = basename(image.path);
-      return [name, image.label];
-    }).toList());
-    final dir = Directory.current.path;
-    final file = File('$dir/$resultFileName');
-    file.writeAsString(csvString.replaceAll("\r\n", "\n"));
+    try {
+      final csvString = const ListToCsvConverter().convert(results.map((image) {
+        final name = basename(image.path);
+        return [name, image.label];
+      }).toList());
+      final dir = Directory.current.path;
+      final file = File('$dir/$resultFileName');
+      file.writeAsString(csvString.replaceAll("\r\n", "\n"));
+    } on IOException {
+      throw MyException(MyError.writeFile(resultFileName));
+    }
   }
 
   Future<List<String>> _loadLabels({String fileName = labelFileName}) async {

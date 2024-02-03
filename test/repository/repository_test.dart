@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/data/repository.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/my_error.dart';
+import 'package:ikut_annotation_v2/model/my_exception.dart';
 
 import '../util/helper.dart';
 import '../util/provider_container.dart';
@@ -52,7 +54,7 @@ void main() {
           await repository.load(labelFileName: "notExist.txt");
           fail("It should throw error");
         } catch (e) {
-          expect(e, isA<IOException>());
+          expect(e, MyException(const MyError.readFile("notExist.txt")));
         }
       });
     });
@@ -64,7 +66,7 @@ void main() {
           await repository.load(resultFileName: "notExist.txt");
           fail("It should throw error");
         } catch (e) {
-          expect(e, isA<IOException>());
+          expect(e, MyException(const MyError.readFile("notExist.txt")));
         }
       });
     });

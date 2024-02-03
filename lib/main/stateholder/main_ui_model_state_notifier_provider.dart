@@ -2,6 +2,8 @@ import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
 import 'package:ikut_annotation_v2/model/my_error.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../model/annotation_task.dart';
 part 'main_ui_model_state_notifier_provider.g.dart';
 
 @riverpod
@@ -19,8 +21,8 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
     state = state.copyWith(error: error);
   }
 
-  void setLoaded(List<LabeledImage> images, List<String> labels) {
-    state = state.copyWith(images: images, labels: labels);
+  void setLoaded(AnnotationTask task) {
+    state = state.copyWith(labels: task.labels, images: task.results);
   }
 
   /// Update selected image
