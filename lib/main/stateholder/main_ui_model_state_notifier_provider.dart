@@ -14,7 +14,7 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       imageIndex: 0,
       previousImageIndex: 0,
       labels: [],
-      writing: false,
+      progress: true,
       error: null);
 
   void setError(MyError? error) {
@@ -22,7 +22,8 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
   }
 
   void setLoaded(AnnotationTask task) {
-    state = state.copyWith(labels: task.labels, images: task.results);
+    state = state.copyWith(
+        labels: task.labels, images: task.results, progress: false);
   }
 
   /// Update selected image
@@ -37,8 +38,8 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
         imageIndex: nextIndex, previousImageIndex: state.imageIndex);
   }
 
-  void setWriting(bool writing) {
-    state = state.copyWith(writing: writing);
+  void setProgressAsTrue() {
+    state = state.copyWith(progress: true);
   }
 
   /// Update selected image's label
@@ -51,6 +52,6 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
     var image = state.images[state.imageIndex];
     image = image.copyWith(label: label);
     images[state.imageIndex] = image;
-    state = state.copyWith(images: images);
+    state = state.copyWith(images: images, progress: false);
   }
 }

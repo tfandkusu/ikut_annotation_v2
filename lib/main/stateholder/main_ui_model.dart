@@ -10,6 +10,6 @@ class MainUiModel with _$MainUiModel {
       required int imageIndex,
       required int previousImageIndex,
       required List<String> labels,
-      required bool writing,
+      required bool progress,
       required MyError? error}) = _MainUiModel;
 }

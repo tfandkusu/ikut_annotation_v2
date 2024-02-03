@@ -34,7 +34,7 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: [],
-              writing: false,
+              progress: true,
               error: null));
       stateNotifier.setLoaded(annotationTask);
       expect(
@@ -44,7 +44,7 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false,
+              progress: false,
               error: null));
     });
   });
@@ -59,7 +59,7 @@ void main() {
               imageIndex: 1,
               previousImageIndex: 0,
               labels: labels,
-              writing: false,
+              progress: false,
               error: null));
       stateNotifier.move(2);
       expect(
@@ -69,7 +69,7 @@ void main() {
               imageIndex: 3,
               previousImageIndex: 1,
               labels: labels,
-              writing: false,
+              progress: false,
               error: null));
     });
   });
@@ -84,7 +84,7 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false,
+              progress: false,
               error: null));
     });
   });
@@ -99,15 +99,15 @@ void main() {
               imageIndex: 3,
               previousImageIndex: 0,
               labels: labels,
-              writing: false,
+              progress: false,
               error: null));
     });
   });
 
-  when("setWriting", () {
-    then("update writing", () {
+  when("setProgressAsTrue", () {
+    then("progress is true", () {
       stateNotifier.setLoaded(annotationTask);
-      stateNotifier.setWriting(true);
+      stateNotifier.setProgressAsTrue();
       expect(
           getState(),
           const MainUiModel(
@@ -115,17 +115,7 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: true,
-              error: null));
-      stateNotifier.setWriting(false);
-      expect(
-          getState(),
-          const MainUiModel(
-              images: images,
-              imageIndex: 0,
-              previousImageIndex: 0,
-              labels: labels,
-              writing: false,
+              progress: true,
               error: null));
     });
   });
@@ -147,7 +137,7 @@ void main() {
               imageIndex: 2,
               previousImageIndex: 0,
               labels: labels,
-              writing: false,
+              progress: false,
               error: null));
     });
   });
@@ -162,7 +152,7 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false,
+              progress: false,
               error: MyError.readFile("label.txt")));
     });
   });
