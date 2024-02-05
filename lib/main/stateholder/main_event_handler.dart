@@ -1,7 +1,10 @@
 import 'package:ikut_annotation_v2/model/my_exception.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/repository.dart';
 import 'main_ui_model_state_notifier_provider.dart';
+
+part 'main_event_handler.g.dart';
 
 class MainEventHandler {
   final MainUiModelStateNotifier _stateHolder;
@@ -9,7 +12,7 @@ class MainEventHandler {
 
   MainEventHandler(this._stateHolder, this.repository);
 
-  void load() async {
+  Future<void> load() async {
     try {
       final annotationTask = await repository.load();
       _stateHolder.setLoaded(annotationTask);
@@ -17,4 +20,10 @@ class MainEventHandler {
       _stateHolder.setError(e.myError);
     }
   }
+}
+
+@riverpod
+MainEventHandler mainEventHandler(MainEventHandlerRef ref) {
+  return MainEventHandler(ref.read(mainUiModelStateNotifierProvider.notifier),
+      ref.read(repositoryProvider));
 }

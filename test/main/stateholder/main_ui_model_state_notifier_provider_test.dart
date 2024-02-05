@@ -25,8 +25,8 @@ void main() {
     stateNotifier = container.read(mainUiModelStateNotifierProvider.notifier);
   });
   getState() => container.read(mainUiModelStateNotifierProvider);
-  when("setLoaded", () {
-    then("set image and labels", () {
+  tw("setLoaded", () {
+    tt("set image and labels", () {
       expect(
           getState(),
           const MainUiModel(
@@ -48,8 +48,8 @@ void main() {
               error: null));
     });
   });
-  when("move", () {
-    then("update imageIndex and previous index", () {
+  tw("move", () {
+    tt("update imageIndex and previous index", () {
       stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(1);
       expect(
@@ -73,8 +73,8 @@ void main() {
               error: null));
     });
   });
-  when("move under zero", () {
-    then("update imageIndex to 0", () {
+  tw("move under zero", () {
+    tt("update imageIndex to 0", () {
       stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(-1);
       expect(
@@ -88,8 +88,8 @@ void main() {
               error: null));
     });
   });
-  when("move over images.count", () {
-    then("update imageIndex to images.count - 1", () {
+  tw("move over images.count", () {
+    tt("update imageIndex to images.count - 1", () {
       stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(4);
       expect(
@@ -104,8 +104,8 @@ void main() {
     });
   });
 
-  when("setProgressAsTrue", () {
-    then("progress is true", () {
+  tw("setProgressAsTrue", () {
+    tt("progress is true", () {
       stateNotifier.setLoaded(annotationTask);
       stateNotifier.setProgressAsTrue();
       expect(
@@ -120,8 +120,8 @@ void main() {
     });
   });
 
-  when("update", () {
-    then("label is updated", () {
+  tw("update", () {
+    tt("label is updated", () {
       stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(2);
       stateNotifier.update(1);
@@ -141,8 +141,8 @@ void main() {
               error: null));
     });
   });
-  when("setError", () {
-    then("error is updated", () {
+  tw("setError", () {
+    tt("error is updated", () {
       stateNotifier.setLoaded(annotationTask);
       stateNotifier.setProgressAsTrue();
       stateNotifier.setError(const MyError.readFile("label.txt"));

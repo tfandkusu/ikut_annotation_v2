@@ -17,9 +17,9 @@ void main() {
     container = createContainer();
     repository = container.read(repositoryProvider);
   });
-  given("File exists", () {
-    when("load", () {
-      then("It returns labels", () async {
+  tg("File exists", () {
+    tw("load", () {
+      tt("It returns labels", () async {
         final dir = Directory.current.path.toString();
         final task = await repository.load();
         expect(task.labels, ["takoyaki", "sushi", "gyoza", "other"]);
@@ -32,8 +32,8 @@ void main() {
             LabeledImage(path: "$dir/image/1399892.jpg", label: "takoyaki"));
       });
     });
-    when("saveResults", () {
-      then("Result file is saved", () async {
+    tw("saveResults", () {
+      tt("Result file is saved", () async {
         const testResultFileName = "result_test.csv";
         final task = await repository.load();
         final results = task.results;
@@ -47,9 +47,9 @@ void main() {
       });
     });
   });
-  given("Label file does not exists", () {
-    when("load", () {
-      then("IOException", () async {
+  tg("Label file does not exists", () {
+    tw("load", () {
+      tt("IOException", () async {
         try {
           await repository.load(labelFileName: "notExist.txt");
           fail("It should throw error");
@@ -59,9 +59,9 @@ void main() {
       });
     });
   });
-  given("result file does not exists", () {
-    when("load", () {
-      then("IOException", () async {
+  tg("result file does not exists", () {
+    tw("load", () {
+      tt("IOException", () async {
         try {
           await repository.load(resultFileName: "notExist.txt");
           fail("It should throw error");
