@@ -6,6 +6,8 @@ import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
 import 'package:ikut_annotation_v2/model/annotation_task.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/my_error.dart';
+import 'package:ikut_annotation_v2/model/my_exception.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../util/helper.dart';
@@ -49,6 +51,19 @@ void main() {
         verifyInOrder([
           () => repository.load(),
           () => stateNotifier.setLoaded(annotationTask),
+        ]);
+      });
+    });
+  });
+  tg("load error", () {
+    tw("load", () {
+      tt("setError", () async {
+        const error = MyError.readFile("label.txt");
+        when(() => repository.load()).thenThrow(MyException(error));
+        await eventHandler.load();
+        verifyInOrder([
+          () => repository.load(),
+          () => stateNotifier.setError(error),
         ]);
       });
     });
