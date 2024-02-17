@@ -68,4 +68,16 @@ void main() {
       });
     });
   });
+  tw("move", () {
+    tt("StateNotifier#move is called", () {
+      eventHandler.move(1);
+      verify(() => stateNotifier.move(1));
+    });
+  });
+  tw("update", () {
+    tt("StateNotifier#update is called", () {
+      eventHandler.update(1);
+      verify(() => stateNotifier.update(1));
+    });
+  });
 }

@@ -20,6 +20,14 @@ class MainEventHandler {
       _stateHolder.setError(e.myError);
     }
   }
+
+  void move(int diff) {
+    _stateHolder.move(diff);
+  }
+
+  void update(int labelIndex) async {
+    _stateHolder.update(labelIndex);
+  }
 }
 
 @riverpod
