@@ -94,4 +94,20 @@ void main() {
       });
     });
   });
+  tg("save failed", () {
+    tw("save", () {
+      tt("onSaveStarted, setError and onSaveFinished", () async {
+        const error = MyError.writeFile("result.csv");
+        when(() => repository.saveResults(images))
+            .thenThrow(MyException(error));
+        await eventHandler.save(images);
+        verifyInOrder([
+          () => stateNotifier.onSaveStarted(),
+          () => repository.saveResults(images),
+          () => stateNotifier.setError(error),
+          () => stateNotifier.onSaveFinished(),
+        ]);
+      });
+    });
+  });
 }
