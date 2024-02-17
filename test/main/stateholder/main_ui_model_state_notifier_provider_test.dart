@@ -35,7 +35,8 @@ void main() {
               previousImageIndex: 0,
               labels: [],
               progress: true,
-              error: null));
+              error: null,
+              saveEffect: false));
       stateNotifier.setLoaded(annotationTask);
       expect(
           getState(),
@@ -45,7 +46,8 @@ void main() {
               previousImageIndex: 0,
               labels: labels,
               progress: false,
-              error: null));
+              error: null,
+              saveEffect: false));
     });
   });
   tw("move", () {
@@ -60,7 +62,8 @@ void main() {
               previousImageIndex: 0,
               labels: labels,
               progress: false,
-              error: null));
+              error: null,
+              saveEffect: false));
       stateNotifier.move(2);
       expect(
           getState(),
@@ -70,7 +73,8 @@ void main() {
               previousImageIndex: 1,
               labels: labels,
               progress: false,
-              error: null));
+              error: null,
+              saveEffect: false));
     });
   });
   tw("move under zero", () {
@@ -85,7 +89,8 @@ void main() {
               previousImageIndex: 0,
               labels: labels,
               progress: false,
-              error: null));
+              error: null,
+              saveEffect: false));
     });
   });
   tw("move over images.count", () {
@@ -100,7 +105,8 @@ void main() {
               previousImageIndex: 0,
               labels: labels,
               progress: false,
-              error: null));
+              error: null,
+              saveEffect: false));
     });
   });
 
@@ -116,7 +122,8 @@ void main() {
               previousImageIndex: 0,
               labels: labels,
               progress: true,
-              error: null));
+              error: null,
+              saveEffect: false));
     });
   });
 
@@ -138,7 +145,8 @@ void main() {
               previousImageIndex: 0,
               labels: labels,
               progress: false,
-              error: null));
+              error: null,
+              saveEffect: false));
     });
   });
   tw("setError", () {
@@ -154,7 +162,35 @@ void main() {
               previousImageIndex: 0,
               labels: labels,
               progress: false,
-              error: MyError.readFile("label.txt")));
+              error: MyError.readFile("label.txt"),
+              saveEffect: false));
+    });
+  });
+  tw("save and onSaved", () {
+    tt("saveEffect is changed", () {
+      stateNotifier.setLoaded(annotationTask);
+      stateNotifier.save();
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              progress: false,
+              error: null,
+              saveEffect: true));
+      stateNotifier.onSaved();
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              progress: false,
+              error: null,
+              saveEffect: false));
     });
   });
 }
