@@ -39,10 +39,6 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
         imageIndex: nextIndex, previousImageIndex: state.imageIndex);
   }
 
-  void setProgressAsTrue() {
-    state = state.copyWith(progress: true);
-  }
-
   /// Update selected image's label
   void update(int labelIndex) async {
     if (labelIndex >= state.labels.length) {
@@ -56,11 +52,15 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
     state = state.copyWith(images: images, progress: false);
   }
 
-  void save() {
-    state = state.copyWith(saveEffect: true);
+  void startSave() {
+    state = state.copyWith(saveEffect: true, progress: true);
   }
 
-  void onSaved() {
+  void onSaveStarted() {
     state = state.copyWith(saveEffect: false);
+  }
+
+  void onSaveFinished() {
+    state = state.copyWith(progress: false);
   }
 }

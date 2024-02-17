@@ -110,23 +110,6 @@ void main() {
     });
   });
 
-  tw("setProgressAsTrue", () {
-    tt("progress is true", () {
-      stateNotifier.setLoaded(annotationTask);
-      stateNotifier.setProgressAsTrue();
-      expect(
-          getState(),
-          const MainUiModel(
-              images: images,
-              imageIndex: 0,
-              previousImageIndex: 0,
-              labels: labels,
-              progress: true,
-              error: null,
-              saveEffect: false));
-    });
-  });
-
   tw("update", () {
     tt("label is updated", () {
       stateNotifier.setLoaded(annotationTask);
@@ -152,7 +135,6 @@ void main() {
   tw("setError", () {
     tt("error is updated", () {
       stateNotifier.setLoaded(annotationTask);
-      stateNotifier.setProgressAsTrue();
       stateNotifier.setError(const MyError.readFile("label.txt"));
       expect(
           getState(),
@@ -166,10 +148,10 @@ void main() {
               saveEffect: false));
     });
   });
-  tw("save and onSaved", () {
-    tt("saveEffect is changed", () {
+  tw("save", () {
+    tt("saveEffect and progress are changed", () {
       stateNotifier.setLoaded(annotationTask);
-      stateNotifier.save();
+      stateNotifier.startSave();
       expect(
           getState(),
           const MainUiModel(
@@ -177,10 +159,21 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              progress: false,
+              progress: true,
               error: null,
               saveEffect: true));
-      stateNotifier.onSaved();
+      stateNotifier.onSaveStarted();
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              progress: true,
+              error: null,
+              saveEffect: false));
+      stateNotifier.onSaveFinished();
       expect(
           getState(),
           const MainUiModel(

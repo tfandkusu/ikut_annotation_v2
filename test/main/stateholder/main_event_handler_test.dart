@@ -77,7 +77,21 @@ void main() {
   tw("update", () {
     tt("StateNotifier#update is called", () {
       eventHandler.update(1);
-      verify(() => stateNotifier.update(1));
+      verifyInOrder(
+          [() => stateNotifier.update(1), () => stateNotifier.startSave()]);
+    });
+  });
+  tg("save succeed", () {
+    tw("save", () {
+      tt("onSaveStarted and onSaveFinished", () async {
+        when(() => repository.saveResults(images)).thenAnswer((_) async {});
+        await eventHandler.save(images);
+        verifyInOrder([
+          () => stateNotifier.onSaveStarted(),
+          () => repository.saveResults(images),
+          () => stateNotifier.onSaveFinished(),
+        ]);
+      });
     });
   });
 }
