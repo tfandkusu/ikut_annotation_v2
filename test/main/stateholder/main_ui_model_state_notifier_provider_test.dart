@@ -2,7 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
+import 'package:ikut_annotation_v2/model/annotation_task.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/my_error.dart';
 
 import '../../util/helper.dart';
 import '../../util/provider_container.dart';
@@ -15,6 +17,7 @@ void main() {
     LabeledImage(path: "img/04.png", label: "sushi"),
   ];
   const labels = ["takoyaki", "sushi", "gyoza"];
+  const annotationTask = AnnotationTask(labels: labels, results: images);
   late ProviderContainer container;
   late MainUiModelStateNotifier stateNotifier;
   setUp(() {
@@ -22,8 +25,8 @@ void main() {
     stateNotifier = container.read(mainUiModelStateNotifierProvider.notifier);
   });
   getState() => container.read(mainUiModelStateNotifierProvider);
-  when("setLoaded", () {
-    then("set image and labels", () {
+  tw("setLoaded", () {
+    tt("set image and labels", () {
       expect(
           getState(),
           const MainUiModel(
@@ -31,11 +34,10 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: [],
-              writing: false));
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+              progress: true,
+              error: null,
+              saveEffect: false));
+      stateNotifier.setLoaded(annotationTask);
       expect(
           getState(),
           const MainUiModel(
@@ -43,15 +45,14 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              progress: false,
+              error: null,
+              saveEffect: false));
     });
   });
-  when("move", () {
-    then("update imageIndex and previous index", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+  tw("move", () {
+    tt("update imageIndex and previous index", () {
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(1);
       expect(
           getState(),
@@ -60,7 +61,9 @@ void main() {
               imageIndex: 1,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              progress: false,
+              error: null,
+              saveEffect: false));
       stateNotifier.move(2);
       expect(
           getState(),
@@ -69,15 +72,14 @@ void main() {
               imageIndex: 3,
               previousImageIndex: 1,
               labels: labels,
-              writing: false));
+              progress: false,
+              error: null,
+              saveEffect: false));
     });
   });
-  when("move under zero", () {
-    then("update imageIndex to 0", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+  tw("move under zero", () {
+    tt("update imageIndex to 0", () {
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(-1);
       expect(
           getState(),
@@ -86,15 +88,14 @@ void main() {
               imageIndex: 0,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              progress: false,
+              error: null,
+              saveEffect: false));
     });
   });
-  when("move over images.count", () {
-    then("update imageIndex to images.count - 1", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+  tw("move over images.count", () {
+    tt("update imageIndex to images.count - 1", () {
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(4);
       expect(
           getState(),
@@ -103,43 +104,15 @@ void main() {
               imageIndex: 3,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              progress: false,
+              error: null,
+              saveEffect: false));
     });
   });
 
-  when("setWriting", () {
-    then("update writing", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
-      stateNotifier.setWriting(true);
-      expect(
-          getState(),
-          const MainUiModel(
-              images: images,
-              imageIndex: 0,
-              previousImageIndex: 0,
-              labels: labels,
-              writing: true));
-      stateNotifier.setWriting(false);
-      expect(
-          getState(),
-          const MainUiModel(
-              images: images,
-              imageIndex: 0,
-              previousImageIndex: 0,
-              labels: labels,
-              writing: false));
-    });
-  });
-
-  when("update", () {
-    then("label is updated", () {
-      stateNotifier.setLoaded(
-        images,
-        labels,
-      );
+  tw("update", () {
+    tt("label is updated", () {
+      stateNotifier.setLoaded(annotationTask);
       stateNotifier.move(2);
       stateNotifier.update(1);
       expect(
@@ -154,7 +127,63 @@ void main() {
               imageIndex: 2,
               previousImageIndex: 0,
               labels: labels,
-              writing: false));
+              progress: false,
+              error: null,
+              saveEffect: false));
+    });
+  });
+  tw("setError", () {
+    tt("error is updated", () {
+      stateNotifier.setLoaded(annotationTask);
+      stateNotifier.setError(const MyError.readFile("label.txt"));
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              progress: false,
+              error: MyError.readFile("label.txt"),
+              saveEffect: false));
+    });
+  });
+  tw("save", () {
+    tt("saveEffect and progress are changed", () {
+      stateNotifier.setLoaded(annotationTask);
+      stateNotifier.startSave();
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              progress: true,
+              error: null,
+              saveEffect: true));
+      stateNotifier.onSaveStarted();
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              progress: true,
+              error: null,
+              saveEffect: false));
+      stateNotifier.onSaveFinished();
+      expect(
+          getState(),
+          const MainUiModel(
+              images: images,
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: labels,
+              progress: false,
+              error: null,
+              saveEffect: false));
     });
   });
 }

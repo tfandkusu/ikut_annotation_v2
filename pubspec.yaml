@@ -40,6 +40,8 @@ dependencies:
   hooks_riverpod: ^2.4.9
   flutter_hooks: ^0.20.4
   flutter_riverpod: ^2.4.9
+  csv: ^5.1.1
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +58,7 @@ dev_dependencies:
   riverpod_generator: ^2.3.9
   custom_lint: ^0.5.8
   riverpod_lint: ^2.3.7
+  mocktail: ^1.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
