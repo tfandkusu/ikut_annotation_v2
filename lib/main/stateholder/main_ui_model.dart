@@ -14,3 +14,9 @@ class MainUiModel with _$MainUiModel {
       required MyError? error,
       required bool saveEffect}) = _MainUiModel;
 }
+
+extension MainUiModelExtension on MainUiModel {
+  bool shouldShowImage() {
+    return images.isNotEmpty;
+  }
+}
