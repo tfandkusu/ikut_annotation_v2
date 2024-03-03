@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -135,13 +136,13 @@ class MainScreen extends HookConsumerWidget {
               color: Colors.black54,
               padding: const EdgeInsets.all(8),
               child: Row(
-                  children: uiModel.labels.map((label) {
+                  children: uiModel.labels.mapIndexed((index, label) {
                 return Expanded(
                     child: _makeLabelButton(
                         context,
                         label == uiModel.images[uiModel.imageIndex].label,
                         label, () {
-                  // update(label);
+                  update(index);
                 }));
               }).toList()))
         ],
