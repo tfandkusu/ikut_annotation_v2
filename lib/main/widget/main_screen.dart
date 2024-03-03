@@ -6,7 +6,6 @@ import 'package:ikut_annotation_v2/main/stateholder/main_event_handler.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart';
 import 'package:ikut_annotation_v2/main/widget/image_widget.dart';
-import 'package:ikut_annotation_v2/main/widget/labels_widget.dart';
 
 import '../../util/view/check_one_shot_operation.dart';
 import '../i10n/localization.dart';
@@ -35,7 +34,9 @@ class MainScreen extends HookConsumerWidget {
           .add(ImageWidget(uiModel.images[uiModel.previousImageIndex]));
       stackChildren.add(ImageWidget(uiModel.images[uiModel.imageIndex]));
     }
-    stackChildren.add(LabelsWidget(uiModel));
+    stackChildren.add(_makeLabelButtons(context, uiModel, (index) {
+      eventHandler.update(index);
+    }));
     stackChildren.add(
         _makePageMoveButtons(context, (int move) => eventHandler.move(move)));
     if (uiModel.progress) {
@@ -109,5 +110,62 @@ class MainScreen extends HookConsumerWidget {
         ],
       ),
     );
+  }
+
+  Widget _makeLabelButtons(
+      BuildContext context, MainUiModel uiModel, void Function(int) update) {
+    final textStyle = Theme.of(context)
+        .textTheme
+        .displayMedium
+        ?.copyWith(color: Theme.of(context).colorScheme.onPrimary);
+    if (uiModel.images.isNotEmpty) {
+      return Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                  color: Colors.black54,
+                  padding: const EdgeInsets.all(16),
+                  child: Text(uiModel.imageIndex.toString(), style: textStyle)),
+              const Spacer()
+            ],
+          ),
+          const Spacer(),
+          Container(
+              color: Colors.black54,
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                  children: uiModel.labels.map((label) {
+                return Expanded(
+                    child: _makeLabelButton(
+                        context,
+                        label == uiModel.images[uiModel.imageIndex].label,
+                        label, () {
+                  // update(label);
+                }));
+              }).toList()))
+        ],
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _makeLabelButton(BuildContext context, bool selected, String label,
+      void Function() onTap) {
+    Color textColor;
+    if (selected) {
+      textColor = Theme.of(context).colorScheme.onPrimary;
+    } else {
+      textColor = Theme.of(context).colorScheme.onPrimary.withOpacity(0.5);
+    }
+    final textStyle =
+        Theme.of(context).textTheme.titleLarge?.copyWith(color: textColor);
+    return TextButton(
+        onPressed: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Text(label, style: textStyle),
+        ));
   }
 }
