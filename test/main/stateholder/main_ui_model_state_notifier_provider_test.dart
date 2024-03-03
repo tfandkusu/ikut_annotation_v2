@@ -36,7 +36,7 @@ void main() {
               labels: [],
               progress: true,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
       stateNotifier.setLoaded(annotationTask);
       expect(
           getState(),
@@ -47,7 +47,7 @@ void main() {
               labels: labels,
               progress: false,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
     });
   });
   tw("move", () {
@@ -63,7 +63,7 @@ void main() {
               labels: labels,
               progress: false,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
       stateNotifier.move(2);
       expect(
           getState(),
@@ -74,7 +74,7 @@ void main() {
               labels: labels,
               progress: false,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
     });
   });
   tw("move under zero", () {
@@ -90,7 +90,7 @@ void main() {
               labels: labels,
               progress: false,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
     });
   });
   tw("move over images.count", () {
@@ -106,7 +106,7 @@ void main() {
               labels: labels,
               progress: false,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
     });
   });
 
@@ -129,7 +129,7 @@ void main() {
               labels: labels,
               progress: false,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
     });
   });
   tw("setError", () {
@@ -145,7 +145,7 @@ void main() {
               labels: labels,
               progress: false,
               error: MyError.readFile("label.txt"),
-              saveEffect: false));
+              saveEffect: null));
     });
   });
   tw("save", () {
@@ -161,7 +161,7 @@ void main() {
               labels: labels,
               progress: true,
               error: null,
-              saveEffect: true));
+              saveEffect: images));
       stateNotifier.onSaveStarted();
       expect(
           getState(),
@@ -172,7 +172,7 @@ void main() {
               labels: labels,
               progress: true,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
       stateNotifier.onSaveFinished();
       expect(
           getState(),
@@ -183,7 +183,7 @@ void main() {
               labels: labels,
               progress: false,
               error: null,
-              saveEffect: false));
+              saveEffect: null));
     });
   });
 }

@@ -8,6 +8,7 @@ import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart'
 import 'package:ikut_annotation_v2/main/widget/image_widget.dart';
 import 'package:ikut_annotation_v2/main/widget/labels_widget.dart';
 
+import '../../util/view/check_one_shot_operation.dart';
 import '../i10n/localization.dart';
 
 class MainScreen extends HookConsumerWidget {
@@ -18,6 +19,12 @@ class MainScreen extends HookConsumerWidget {
     final uiModel = ref.watch(mainUiModelProvider);
     final eventHandler = ref.read(mainEventHandlerProvider);
     final localization = ref.watch(localizationProvider);
+    ref.listen(mainUiModelProvider, (previous, next) {
+      checkOneShotOperation(previous, next, (state) => state.saveEffect,
+          (saveTarget) {
+        eventHandler.save(saveTarget);
+      });
+    });
     useEffect(() {
       eventHandler.load();
       return () {};
@@ -29,6 +36,9 @@ class MainScreen extends HookConsumerWidget {
       stackChildren.add(ImageWidget(uiModel.images[uiModel.imageIndex]));
     }
     stackChildren.add(LabelsWidget(uiModel));
+    if (uiModel.progress) {
+      stackChildren.add(const Center(child: CircularProgressIndicator()));
+    }
     return Focus(
       autofocus: true,
       onKey: (node, event) {

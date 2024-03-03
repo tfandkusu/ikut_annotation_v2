@@ -17,6 +17,6 @@ void main() {
             labels: [],
             progress: true,
             error: null,
-            saveEffect: false));
+            saveEffect: null));
   });
 }
