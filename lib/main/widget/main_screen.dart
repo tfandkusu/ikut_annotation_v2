@@ -36,6 +36,8 @@ class MainScreen extends HookConsumerWidget {
       stackChildren.add(ImageWidget(uiModel.images[uiModel.imageIndex]));
     }
     stackChildren.add(LabelsWidget(uiModel));
+    stackChildren.add(
+        _makePageMoveButtons(context, (int move) => eventHandler.move(move)));
     if (uiModel.progress) {
       stackChildren.add(const Center(child: CircularProgressIndicator()));
     }
@@ -71,6 +73,41 @@ class MainScreen extends HookConsumerWidget {
           body: Stack(
             children: stackChildren,
           )),
+    );
+  }
+
+  Widget _makePageMoveButtons(BuildContext context, void Function(int) move) {
+    final iconColor = Theme.of(context).colorScheme.onPrimary;
+    return Center(
+      child: Row(
+        children: [
+          Container(
+            color: Colors.black54,
+            padding: const EdgeInsets.all(8),
+            child: IconButton(
+              onPressed: () {
+                move(-1);
+              },
+              icon: const Icon(Icons.arrow_back),
+              color: iconColor,
+              iconSize: 48,
+            ),
+          ),
+          const Spacer(),
+          Container(
+            color: Colors.black54,
+            padding: const EdgeInsets.all(8),
+            child: IconButton(
+              onPressed: () {
+                move(1);
+              },
+              icon: const Icon(Icons.arrow_forward),
+              color: iconColor,
+              iconSize: 48,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
