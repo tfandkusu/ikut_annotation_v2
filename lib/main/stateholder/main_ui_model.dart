@@ -12,5 +12,11 @@ class MainUiModel with _$MainUiModel {
       required List<String> labels,
       required bool progress,
       required MyError? error,
-      required bool saveEffect}) = _MainUiModel;
+      required List<LabeledImage>? saveEffect}) = _MainUiModel;
+}
+
+extension MainUiModelExtension on MainUiModel {
+  bool shouldShowImage() {
+    return images.isNotEmpty;
+  }
 }

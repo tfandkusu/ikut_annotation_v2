@@ -16,7 +16,7 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       labels: [],
       progress: true,
       error: null,
-      saveEffect: false);
+      saveEffect: null);
 
   void setError(MyError? error) {
     state = state.copyWith(error: error, progress: false);
@@ -53,11 +53,11 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
   }
 
   void startSave() {
-    state = state.copyWith(saveEffect: true, progress: true);
+    state = state.copyWith(saveEffect: state.images, progress: true);
   }
 
   void onSaveStarted() {
-    state = state.copyWith(saveEffect: false);
+    state = state.copyWith(saveEffect: null);
   }
 
   void onSaveFinished() {
