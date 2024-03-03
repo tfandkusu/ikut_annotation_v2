@@ -164,6 +164,9 @@ class MainScreen extends HookConsumerWidget {
         Theme.of(context).textTheme.titleLarge?.copyWith(color: textColor);
     return TextButton(
         onPressed: onTap,
+        style: TextButton.styleFrom(
+          foregroundColor: textColor,
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(label, style: textStyle),
