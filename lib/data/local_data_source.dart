@@ -90,4 +90,15 @@ class LocalDataSource extends _$LocalDataSource {
                 ))
             .toList());
   }
+
+  Future<void> updateImageLabel(int imageId, int labelIndex) async {
+    final labels = await (select(localLabels)
+          ..orderBy([(t) => OrderingTerm(expression: t.id)]))
+        .get();
+    final labelId = labels[labelIndex].id;
+    await (update(localImages)..where((t) => t.id.equals(imageId)))
+        .write(LocalImagesCompanion(
+      labelId: Value(labelId),
+    ));
+  }
 }
