@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:drift/native.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
+
 part 'app_database.g.dart';
 
 class LocalLabels extends Table {
@@ -23,14 +24,6 @@ class LocalImages extends Table {
       integer().customConstraint('NOT NULL REFERENCES local_labels(id)')();
 }
 
-@DriftDatabase(tables: [LocalImages, LocalLabels])
-class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
-
-  @override
-  int get schemaVersion => 1;
-}
-
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
@@ -42,4 +35,20 @@ LazyDatabase _openConnection() {
     sqlite3.tempDirectory = cacheBase;
     return NativeDatabase.createInBackground(file);
   });
+}
+
+@DriftDatabase(tables: [LocalImages, LocalLabels])
+class AppDatabase extends _$AppDatabase {
+  AppDatabase() : super(_openConnection());
+
+  @override
+  int get schemaVersion => 1;
+
+  Future<void> saveLabels(List<String> labels) {
+    return transaction(() async {
+      for (final label in labels) {
+        into(localLabels).insert(LocalLabelsCompanion.insert(name: label));
+      }
+    });
+  }
 }
