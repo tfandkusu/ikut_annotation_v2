@@ -11,6 +11,9 @@ void main() {
   setUp(() {
     dataSource = LocalDataSource.test(NativeDatabase.memory());
   });
+  tearDown(() async {
+    await dataSource.close();
+  });
   tw("saveAnnotationTask", () {
     tt("labels and images can be watched", () async {
       final labels = ["takoyaki", "sushi", "gyoza", "other"];
@@ -21,7 +24,7 @@ void main() {
         const LabeledImage(id: 4, url: "img/04.png", label: "sushi"),
       ];
       final annotationTask = AnnotationTask(labels: labels, images: images);
-      dataSource.saveAnnotationTask(annotationTask);
+      await dataSource.saveAnnotationTask(annotationTask);
       expect(labels, await dataSource.watchLabels().first);
       expect(images, await dataSource.watchImages().first);
     });
