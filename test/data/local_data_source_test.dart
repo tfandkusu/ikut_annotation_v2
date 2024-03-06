@@ -44,7 +44,7 @@ void main() {
       ];
       final annotationTask = AnnotationTask(labels: labels, images: images);
       await dataSource.saveAnnotationTask(annotationTask);
-      await dataSource.updateImageLabel(3, 1);
+      await dataSource.updateImageLabel(imageId: 3, labelIndex: 1);
       expect(labels, await dataSource.watchLabels().first);
       expect(updatedImages, await dataSource.watchImages().first);
     });
