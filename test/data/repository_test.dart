@@ -25,11 +25,11 @@ void main() {
         expect(task.labels, ["takoyaki", "sushi", "gyoza", "other"]);
         expect(task.results.length, 300);
         expect(task.results[0],
-            LabeledImage(path: "$dir/image/1002013.jpg", label: "takoyaki"));
+            LabeledImage(url: "$dir/image/1002013.jpg", label: "takoyaki"));
         expect(task.results[4],
-            LabeledImage(path: "$dir/image/100332.jpg", label: "sushi"));
+            LabeledImage(url: "$dir/image/100332.jpg", label: "sushi"));
         expect(task.results[299],
-            LabeledImage(path: "$dir/image/1399892.jpg", label: "takoyaki"));
+            LabeledImage(url: "$dir/image/1399892.jpg", label: "takoyaki"));
       });
     });
     tw("saveResults", () {

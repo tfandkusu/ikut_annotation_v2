@@ -11,10 +11,10 @@ import '../../util/provider_container.dart';
 
 void main() {
   const images = [
-    LabeledImage(path: "img/01.png", label: "sushi"),
-    LabeledImage(path: "img/02.png", label: "takoyaki"),
-    LabeledImage(path: "img/03.png", label: "gyoza"),
-    LabeledImage(path: "img/04.png", label: "sushi"),
+    LabeledImage(url: "img/01.png", label: "sushi"),
+    LabeledImage(url: "img/02.png", label: "takoyaki"),
+    LabeledImage(url: "img/03.png", label: "gyoza"),
+    LabeledImage(url: "img/04.png", label: "sushi"),
   ];
   const labels = ["takoyaki", "sushi", "gyoza"];
   const annotationTask = AnnotationTask(labels: labels, results: images);
@@ -119,10 +119,10 @@ void main() {
           getState(),
           const MainUiModel(
               images: [
-                LabeledImage(path: "img/01.png", label: "sushi"),
-                LabeledImage(path: "img/02.png", label: "takoyaki"),
-                LabeledImage(path: "img/03.png", label: "sushi"),
-                LabeledImage(path: "img/04.png", label: "sushi"),
+                LabeledImage(url: "img/01.png", label: "sushi"),
+                LabeledImage(url: "img/02.png", label: "takoyaki"),
+                LabeledImage(url: "img/03.png", label: "sushi"),
+                LabeledImage(url: "img/04.png", label: "sushi"),
               ],
               imageIndex: 2,
               previousImageIndex: 0,

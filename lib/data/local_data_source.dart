@@ -7,6 +7,8 @@ import 'package:drift/native.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
+import '../model/label_image.dart';
+
 part 'local_data_source.g.dart';
 
 class LocalLabels extends Table {
@@ -59,4 +61,15 @@ class LocalDataSource extends _$LocalDataSource {
         .get()
         .then((rows) => rows.map((row) => row.name).toList());
   }
+  //
+  // Future<void> saveImages(List<LabeledImage> images) {
+  //   return transaction(() async {
+  //     for (final image in images) {
+  //       into(localImages).insert(LocalImagesCompanion.insert(
+  //         url: image.path,
+  //         labelId: image.labelId,
+  //       ));
+  //     }
+  //   });
+  // }
 }

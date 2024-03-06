@@ -42,7 +42,7 @@ class Repository {
       {String resultFileName = resultFileName}) async {
     try {
       final csvString = const ListToCsvConverter().convert(results.map((image) {
-        final name = basename(image.path);
+        final name = basename(image.url);
         return [name, image.label];
       }).toList());
       final dir = Directory.current.path;
@@ -79,7 +79,7 @@ class Repository {
       if (items.length >= 2) {
         label = items[1];
       }
-      return LabeledImage(path: path, label: label);
+      return LabeledImage(url: path, label: label);
     }).toList();
   }
 }
