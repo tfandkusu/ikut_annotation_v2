@@ -7,7 +7,7 @@ import 'package:drift/native.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
-part 'app_database.g.dart';
+part 'local_data_source.g.dart';
 
 class LocalLabels extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -38,8 +38,8 @@ LazyDatabase _openConnection() {
 }
 
 @DriftDatabase(tables: [LocalImages, LocalLabels])
-class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+class LocalDataSource extends _$LocalDataSource {
+  LocalDataSource() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
