@@ -41,6 +41,8 @@ LazyDatabase _openConnection() {
 class LocalDataSource extends _$LocalDataSource {
   LocalDataSource() : super(_openConnection());
 
+  LocalDataSource.test(NativeDatabase db) : super(db);
+
   @override
   int get schemaVersion => 1;
 
@@ -50,5 +52,11 @@ class LocalDataSource extends _$LocalDataSource {
         into(localLabels).insert(LocalLabelsCompanion.insert(name: label));
       }
     });
+  }
+
+  Future<List<String>> loadLabels() {
+    return select(localLabels)
+        .get()
+        .then((rows) => rows.map((row) => row.name).toList());
   }
 }
