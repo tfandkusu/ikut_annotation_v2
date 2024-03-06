@@ -84,6 +84,7 @@ class LocalDataSource extends _$LocalDataSource {
         .watch()
         .map((rows) => rows
             .map((row) => LabeledImage(
+                  id: row.readTable(localImages).id,
                   url: row.readTable(localImages).url,
                   label: row.readTable(localLabels).name,
                 ))

@@ -21,10 +21,10 @@ class RepositoryMock extends Mock implements Repository {}
 
 void main() {
   const images = [
-    LabeledImage(url: "img/01.png", label: "sushi"),
-    LabeledImage(url: "img/02.png", label: "takoyaki"),
-    LabeledImage(url: "img/03.png", label: "gyoza"),
-    LabeledImage(url: "img/04.png", label: "sushi"),
+    LabeledImage(id: 1, url: "img/01.png", label: "sushi"),
+    LabeledImage(id: 2, url: "img/02.png", label: "takoyaki"),
+    LabeledImage(id: 3, url: "img/03.png", label: "gyoza"),
+    LabeledImage(id: 4, url: "img/04.png", label: "sushi"),
   ];
   const labels = ["takoyaki", "sushi", "gyoza"];
   const annotationTask = AnnotationTask(labels: labels, images: images);

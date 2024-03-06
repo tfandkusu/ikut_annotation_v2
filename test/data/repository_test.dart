@@ -24,12 +24,16 @@ void main() {
         final task = await repository.load();
         expect(task.labels, ["takoyaki", "sushi", "gyoza", "other"]);
         expect(task.images.length, 300);
-        expect(task.images[0],
-            LabeledImage(url: "$dir/image/1002013.jpg", label: "takoyaki"));
+        expect(
+            task.images[0],
+            LabeledImage(
+                id: 1, url: "$dir/image/1002013.jpg", label: "takoyaki"));
         expect(task.images[4],
-            LabeledImage(url: "$dir/image/100332.jpg", label: "sushi"));
-        expect(task.images[299],
-            LabeledImage(url: "$dir/image/1399892.jpg", label: "takoyaki"));
+            LabeledImage(id: 5, url: "$dir/image/100332.jpg", label: "sushi"));
+        expect(
+            task.images[299],
+            LabeledImage(
+                id: 300, url: "$dir/image/1399892.jpg", label: "takoyaki"));
       });
     });
     tw("saveResults", () {

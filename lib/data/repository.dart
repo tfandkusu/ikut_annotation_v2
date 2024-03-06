@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
 import 'package:ikut_annotation_v2/model/label_image.dart';
 import 'package:ikut_annotation_v2/model/my_error.dart';
@@ -72,14 +73,14 @@ class Repository {
     final fields = const CsvToListConverter(
       eol: '\n',
     ).convert(csvString);
-    return fields.map((items) {
+    return fields.mapIndexed((index, items) {
       final path = "$dir/image/${items[0]}";
       // If labels is not set, first label is used as image's label.
       String label = labels[0];
       if (items.length >= 2) {
         label = items[1];
       }
-      return LabeledImage(url: path, label: label);
+      return LabeledImage(id: index + 1, url: path, label: label);
     }).toList();
   }
 }

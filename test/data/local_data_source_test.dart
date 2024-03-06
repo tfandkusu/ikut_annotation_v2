@@ -15,10 +15,10 @@ void main() {
     tt("labels and images can be watched", () async {
       final labels = ["takoyaki", "sushi", "gyoza", "other"];
       final images = [
-        const LabeledImage(url: "img/01.png", label: "sushi"),
-        const LabeledImage(url: "img/02.png", label: "takoyaki"),
-        const LabeledImage(url: "img/03.png", label: "gyoza"),
-        const LabeledImage(url: "img/04.png", label: "sushi"),
+        const LabeledImage(id: 1, url: "img/01.png", label: "sushi"),
+        const LabeledImage(id: 2, url: "img/02.png", label: "takoyaki"),
+        const LabeledImage(id: 3, url: "img/03.png", label: "gyoza"),
+        const LabeledImage(id: 4, url: "img/04.png", label: "sushi"),
       ];
       final annotationTask = AnnotationTask(labels: labels, images: images);
       dataSource.saveAnnotationTask(annotationTask);
