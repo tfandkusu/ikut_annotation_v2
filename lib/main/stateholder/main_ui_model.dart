@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../model/label_image.dart';
+import '../../model/labeled_image.dart';
 import '../../model/my_error.dart';
 part 'main_ui_model.freezed.dart';
 

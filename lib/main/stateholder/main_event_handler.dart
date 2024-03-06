@@ -2,7 +2,7 @@ import 'package:ikut_annotation_v2/model/my_exception.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/repository.dart';
-import '../../model/label_image.dart';
+import '../../model/labeled_image.dart';
 import 'main_ui_model_state_notifier_provider.dart';
 
 part 'main_event_handler.g.dart';

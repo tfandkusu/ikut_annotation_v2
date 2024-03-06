@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/labeled_image.dart';
 
 class ImageWidget extends StatelessWidget {
   final LabeledImage image;

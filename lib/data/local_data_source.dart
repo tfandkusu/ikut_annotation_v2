@@ -8,7 +8,7 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
 import '../model/annotation_task.dart';
-import '../model/label_image.dart';
+import '../model/labeled_image.dart';
 
 part 'local_data_source.g.dart';
 

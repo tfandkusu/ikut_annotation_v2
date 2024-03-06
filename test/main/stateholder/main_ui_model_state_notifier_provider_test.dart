@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
 import 'package:ikut_annotation_v2/model/annotation_task.dart';
-import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/labeled_image.dart';
 import 'package:ikut_annotation_v2/model/my_error.dart';
 
 import '../../util/helper.dart';

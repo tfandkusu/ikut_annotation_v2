@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/data/repository.dart';
-import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/labeled_image.dart';
 import 'package:ikut_annotation_v2/model/my_error.dart';
 import 'package:ikut_annotation_v2/model/my_exception.dart';
 

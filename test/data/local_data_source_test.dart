@@ -2,7 +2,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/data/local_data_source.dart';
 import 'package:ikut_annotation_v2/model/annotation_task.dart';
-import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/labeled_image.dart';
 
 import '../util/helper.dart';
 
