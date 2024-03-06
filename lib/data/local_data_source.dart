@@ -7,6 +7,7 @@ import 'package:drift/native.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
+import '../model/annotation_task.dart';
 import '../model/label_image.dart';
 
 part 'local_data_source.g.dart';
@@ -48,28 +49,43 @@ class LocalDataSource extends _$LocalDataSource {
   @override
   int get schemaVersion => 1;
 
-  Future<void> saveLabels(List<String> labels) {
+  Future<void> saveAnnotationTask(AnnotationTask task) {
     return transaction(() async {
-      for (final label in labels) {
+      delete(localImages);
+      delete(localLabels);
+      for (final label in task.labels) {
         into(localLabels).insert(LocalLabelsCompanion.insert(name: label));
+      }
+      final savedLabels = await select(localLabels).get();
+      Map<String, int> idMap = {for (var label in savedLabels) label.name: label.id};
+      for (final image in task.results) {
+        into(localImages).insert(LocalImagesCompanion.insert(
+          url: image.url,
+          labelId: idMap[image.label]!,
+        ));
       }
     });
   }
 
-  Future<List<String>> loadLabels() {
-    return select(localLabels)
-        .get()
-        .then((rows) => rows.map((row) => row.name).toList());
+  Stream<List<String>> watchLabels() {
+    return (select(localLabels)
+          ..orderBy([(t) => OrderingTerm(expression: t.id)]))
+        .watch()
+        .map((rows) => rows.map((row) => row.name).toList());
   }
-  //
-  // Future<void> saveImages(List<LabeledImage> images) {
-  //   return transaction(() async {
-  //     for (final image in images) {
-  //       into(localImages).insert(LocalImagesCompanion.insert(
-  //         url: image.path,
-  //         labelId: image.labelId,
-  //       ));
-  //     }
-  //   });
-  // }
+
+
+  Stream<List<LabeledImage>> watchImages() {
+    return select(localImages)
+        .join([
+          innerJoin(localLabels, localLabels.id.equalsExp(localImages.labelId))
+        ])
+        .watch()
+        .map((rows) => rows
+            .map((row) => LabeledImage(
+                  url: row.readTable(localImages).url,
+                  label: row.readTable(localLabels).name,
+                ))
+            .toList());
+  }
 }
