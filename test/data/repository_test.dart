@@ -23,12 +23,12 @@ void main() {
         final dir = Directory.current.path.toString();
         final task = await repository.load();
         expect(task.labels, ["takoyaki", "sushi", "gyoza", "other"]);
-        expect(task.results.length, 300);
-        expect(task.results[0],
+        expect(task.images.length, 300);
+        expect(task.images[0],
             LabeledImage(url: "$dir/image/1002013.jpg", label: "takoyaki"));
-        expect(task.results[4],
+        expect(task.images[4],
             LabeledImage(url: "$dir/image/100332.jpg", label: "sushi"));
-        expect(task.results[299],
+        expect(task.images[299],
             LabeledImage(url: "$dir/image/1399892.jpg", label: "takoyaki"));
       });
     });
@@ -36,12 +36,12 @@ void main() {
       tt("Result file is saved", () async {
         const testResultFileName = "result_test.csv";
         final task = await repository.load();
-        final results = task.results;
-        await repository.saveResults(results,
+        final images = task.images;
+        await repository.saveResults(images,
             resultFileName: testResultFileName);
         final savedTask =
             await repository.load(resultFileName: testResultFileName);
-        expect(savedTask.results[0], task.results[0]);
+        expect(savedTask.images[0], task.images[0]);
         final dir = Directory.current.path.toString();
         await File("$dir/$testResultFileName").delete();
       });

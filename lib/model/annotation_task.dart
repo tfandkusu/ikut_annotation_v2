@@ -7,5 +7,5 @@ part 'annotation_task.freezed.dart';
 class AnnotationTask with _$AnnotationTask {
   const factory AnnotationTask(
       {required List<String> labels,
-      required List<LabeledImage> results}) = _AnnotationTask;
+      required List<LabeledImage> images}) = _AnnotationTask;
 }

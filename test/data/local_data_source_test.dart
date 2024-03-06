@@ -20,9 +20,9 @@ void main() {
         const LabeledImage(url: "img/03.png", label: "gyoza"),
         const LabeledImage(url: "img/04.png", label: "sushi"),
       ];
-      final annotationTask = AnnotationTask(labels: labels, results: images);
+      final annotationTask = AnnotationTask(labels: labels, images: images);
       dataSource.saveAnnotationTask(annotationTask);
-      expect(labels,await dataSource.watchLabels().first);
+      expect(labels, await dataSource.watchLabels().first);
       expect(images, await dataSource.watchImages().first);
     });
   });

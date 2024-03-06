@@ -32,7 +32,7 @@ class Repository {
     }
     try {
       final results = await _loadResults(labels, fileName: resultFileName);
-      return AnnotationTask(labels: labels, results: results);
+      return AnnotationTask(labels: labels, images: results);
     } on IOException {
       throw MyException(MyError.readFile(resultFileName));
     }

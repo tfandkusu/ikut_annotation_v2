@@ -24,7 +24,7 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
 
   void setLoaded(AnnotationTask task) {
     state = state.copyWith(
-        labels: task.labels, images: task.results, progress: false);
+        labels: task.labels, images: task.images, progress: false);
   }
 
   /// Update selected image

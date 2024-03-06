@@ -17,7 +17,7 @@ void main() {
     LabeledImage(url: "img/04.png", label: "sushi"),
   ];
   const labels = ["takoyaki", "sushi", "gyoza"];
-  const annotationTask = AnnotationTask(labels: labels, results: images);
+  const annotationTask = AnnotationTask(labels: labels, images: images);
   late ProviderContainer container;
   late MainUiModelStateNotifier stateNotifier;
   setUp(() {

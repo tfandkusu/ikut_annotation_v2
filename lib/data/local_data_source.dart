@@ -57,8 +57,10 @@ class LocalDataSource extends _$LocalDataSource {
         into(localLabels).insert(LocalLabelsCompanion.insert(name: label));
       }
       final savedLabels = await select(localLabels).get();
-      Map<String, int> idMap = {for (var label in savedLabels) label.name: label.id};
-      for (final image in task.results) {
+      Map<String, int> idMap = {
+        for (var label in savedLabels) label.name: label.id
+      };
+      for (final image in task.images) {
         into(localImages).insert(LocalImagesCompanion.insert(
           url: image.url,
           labelId: idMap[image.label]!,
@@ -73,7 +75,6 @@ class LocalDataSource extends _$LocalDataSource {
         .watch()
         .map((rows) => rows.map((row) => row.name).toList());
   }
-
 
   Stream<List<LabeledImage>> watchImages() {
     return select(localImages)
