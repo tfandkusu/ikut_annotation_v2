@@ -97,6 +97,45 @@ void main() {
       verify(() => localDataSource.updateImageLabel(imageId: 1, labelIndex: 2));
     });
   });
+  tw("getYaml", () {
+    tt("get yaml string", () async {
+      final labels = ["takoyaki", "sushi", "gyoza", "other"];
+      final images = [
+        const LabeledImage(
+            id: 1,
+            url: "https://ikut-annotation-sample.web.app/image/1002013.jpg",
+            label: "sushi"),
+        const LabeledImage(
+            id: 2,
+            url: "https://ikut-annotation-sample.web.app/image/1002167.jpg",
+            label: "takoyaki"),
+        const LabeledImage(
+            id: 3,
+            url: "https://ikut-annotation-sample.web.app/image/1002237.jpg",
+            label: "gyoza"),
+      ];
+      when(() => localDataSource.watchLabels())
+          .thenAnswer((_) => Stream.value(labels));
+      when(() => localDataSource.watchImages())
+          .thenAnswer((_) => Stream.value(images));
+      final yaml = await repository.getYaml();
+      const answer = """
+labels: 
+  - 'takoyaki'
+  - 'sushi'
+  - 'gyoza'
+  - 'other'
+images: 
+  - url: 'https://ikut-annotation-sample.web.app/image/1002013.jpg'
+    label: 'sushi'
+  - url: 'https://ikut-annotation-sample.web.app/image/1002167.jpg'
+    label: 'takoyaki'
+  - url: 'https://ikut-annotation-sample.web.app/image/1002237.jpg'
+    label: 'gyoza'
+""";
+      expect(answer, yaml);
+    });
+  });
 
   tg("File exists", () {
     tw("load", () {

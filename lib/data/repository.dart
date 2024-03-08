@@ -9,6 +9,7 @@ import 'package:ikut_annotation_v2/model/my_error.dart';
 import 'package:ikut_annotation_v2/model/my_exception.dart';
 import 'package:path/path.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:yaml_writer/yaml_writer.dart';
 
 import '../model/annotation_task.dart';
 import 'local_data_source_provider.dart';
@@ -50,6 +51,22 @@ class Repository {
       {required int imageId, required int labelIndex}) async {
     await _localDataSource.updateImageLabel(
         imageId: imageId, labelIndex: labelIndex);
+  }
+
+  Future<String> getYaml() async {
+    final labels = await _localDataSource.watchLabels().first;
+    final images = await _localDataSource.watchImages().first;
+    Map<String, dynamic> task = {
+      "labels": labels,
+      "images": images.map((image) {
+        return {
+          "url": image.url,
+          "label": image.label,
+        };
+      }).toList()
+    };
+    final yamlWriter = YamlWriter();
+    return yamlWriter.write(task);
   }
 
   Future<AnnotationTask> load(
