@@ -1,8 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:ikut_annotation_v2/model/labeled_image.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yaml/yaml.dart';
 
 import '../model/annotation_task.dart';
+
+part 'remote_data_source.g.dart';
+
+@riverpod
+RemoteDataSource remoteDataSource(RemoteDataSourceRef ref) {
+  return RemoteDataSource();
+}
 
 class RemoteDataSource {
   final _dio = Dio();

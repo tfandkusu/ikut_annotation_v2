@@ -2,21 +2,102 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ikut_annotation_v2/data/local_data_source.dart';
+import 'package:ikut_annotation_v2/data/local_data_source_provider.dart';
+import 'package:ikut_annotation_v2/data/remote_data_source.dart';
 import 'package:ikut_annotation_v2/data/repository.dart';
+import 'package:ikut_annotation_v2/model/annotation_task.dart';
 import 'package:ikut_annotation_v2/model/labeled_image.dart';
 import 'package:ikut_annotation_v2/model/my_error.dart';
 import 'package:ikut_annotation_v2/model/my_exception.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../util/helper.dart';
 import '../util/provider_container.dart';
 
+class RemoteDataSourceMock extends Mock implements RemoteDataSource {}
+
+class LocalDataSourceMock extends Mock implements LocalDataSource {}
+
 void main() {
   late ProviderContainer container;
   late Repository repository;
+  late RemoteDataSourceMock remoteDataSource;
+  late LocalDataSourceMock localDataSource;
   setUp(() {
-    container = createContainer();
+    remoteDataSource = RemoteDataSourceMock();
+    localDataSource = LocalDataSourceMock();
+    container = createContainer(
+      overrides: [
+        remoteDataSourceProvider.overrideWith((ref) => remoteDataSource),
+        localDataSourceProvider.overrideWith((ref) => localDataSource),
+      ],
+    );
     repository = container.read(repositoryProvider);
   });
+  tw("loadV2", () {
+    tt("load and save", () async {
+      const taskUrl = "https://ikut-annotation-sample.web.app/task.yaml";
+      final labels = ["takoyaki", "sushi", "gyoza", "other"];
+      final images = [
+        const LabeledImage(id: 0, url: "img/01.png", label: "sushi"),
+        const LabeledImage(id: 0, url: "img/02.png", label: "takoyaki"),
+        const LabeledImage(id: 0, url: "img/03.png", label: "gyoza"),
+        const LabeledImage(id: 0, url: "img/04.png", label: "sushi"),
+      ];
+      final task = AnnotationTask(labels: labels, images: images);
+      when(() => remoteDataSource.load(taskUrl)).thenAnswer((_) async => task);
+      when(() => localDataSource.saveAnnotationTask(task))
+          .thenAnswer((_) async {});
+      await repository.loadV2();
+      verifyInOrder([
+        () => remoteDataSource.load(taskUrl),
+        () => localDataSource.saveAnnotationTask(task),
+      ]);
+    });
+  });
+  tw("watchLabels", () {
+    tt("get stream of label list", () async {
+      final labels = ["takoyaki", "sushi", "gyoza", "other"];
+      when(() => localDataSource.watchLabels())
+          .thenAnswer((_) => Stream.value(labels));
+      expect(labels, await repository.watchLabels().first);
+    });
+  });
+  tw("watchImages", () {
+    tt("get stream of image list", () async {
+      final images = [
+        const LabeledImage(
+            id: 1,
+            url: "https://ikut-annotation-sample.web.app/image/1002013.jpg",
+            label: "sushi"),
+        const LabeledImage(
+            id: 2,
+            url: "https://ikut-annotation-sample.web.app/image/1002167.jpg",
+            label: "takoyaki"),
+        const LabeledImage(
+            id: 3,
+            url: "https://ikut-annotation-sample.web.app/image/1002237.jpg",
+            label: "gyoza"),
+        const LabeledImage(
+            id: 4,
+            url: "https://ikut-annotation-sample.web.app/image/1003289.jpg",
+            label: "sushi"),
+      ];
+      when(() => localDataSource.watchImages())
+          .thenAnswer((_) => Stream.value(images));
+      expect(images, await repository.watchImages().first);
+    });
+  });
+  tw("updateImageLabel", () {
+    tt("update label of image", () async {
+      when(() => localDataSource.updateImageLabel(imageId: 1, labelIndex: 2))
+          .thenAnswer((_) async {});
+      await repository.updateImageLabel(imageId: 1, labelIndex: 2);
+      verify(() => localDataSource.updateImageLabel(imageId: 1, labelIndex: 2));
+    });
+  });
+
   tg("File exists", () {
     tw("load", () {
       tt("It returns labels", () async {
