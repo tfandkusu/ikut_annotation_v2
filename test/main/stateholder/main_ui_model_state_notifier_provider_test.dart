@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
 import 'package:ikut_annotation_v2/model/annotation_task.dart';
-import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/labeled_image.dart';
 import 'package:ikut_annotation_v2/model/my_error.dart';
 
 import '../../util/helper.dart';
@@ -11,13 +11,13 @@ import '../../util/provider_container.dart';
 
 void main() {
   const images = [
-    LabeledImage(path: "img/01.png", label: "sushi"),
-    LabeledImage(path: "img/02.png", label: "takoyaki"),
-    LabeledImage(path: "img/03.png", label: "gyoza"),
-    LabeledImage(path: "img/04.png", label: "sushi"),
+    LabeledImage(id: 1, url: "img/01.png", label: "sushi"),
+    LabeledImage(id: 2, url: "img/02.png", label: "takoyaki"),
+    LabeledImage(id: 3, url: "img/03.png", label: "gyoza"),
+    LabeledImage(id: 4, url: "img/04.png", label: "sushi"),
   ];
   const labels = ["takoyaki", "sushi", "gyoza"];
-  const annotationTask = AnnotationTask(labels: labels, results: images);
+  const annotationTask = AnnotationTask(labels: labels, images: images);
   late ProviderContainer container;
   late MainUiModelStateNotifier stateNotifier;
   setUp(() {
@@ -119,10 +119,10 @@ void main() {
           getState(),
           const MainUiModel(
               images: [
-                LabeledImage(path: "img/01.png", label: "sushi"),
-                LabeledImage(path: "img/02.png", label: "takoyaki"),
-                LabeledImage(path: "img/03.png", label: "sushi"),
-                LabeledImage(path: "img/04.png", label: "sushi"),
+                LabeledImage(id: 1, url: "img/01.png", label: "sushi"),
+                LabeledImage(id: 2, url: "img/02.png", label: "takoyaki"),
+                LabeledImage(id: 3, url: "img/03.png", label: "sushi"),
+                LabeledImage(id: 4, url: "img/04.png", label: "sushi"),
               ],
               imageIndex: 2,
               previousImageIndex: 0,

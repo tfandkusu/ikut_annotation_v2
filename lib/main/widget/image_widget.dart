@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ikut_annotation_v2/model/label_image.dart';
+import 'package:ikut_annotation_v2/model/labeled_image.dart';
 
 class ImageWidget extends StatelessWidget {
   final LabeledImage image;
@@ -13,7 +13,7 @@ class ImageWidget extends StatelessWidget {
     return Container(
       color: Colors.black,
       constraints: const BoxConstraints.expand(),
-      child: Image.file(File(image.path), fit: BoxFit.contain),
+      child: Image.file(File(image.url), fit: BoxFit.contain),
     );
   }
 }
