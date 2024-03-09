@@ -9,6 +9,7 @@ import 'package:ikut_annotation_v2/model/my_error.dart';
 import 'package:ikut_annotation_v2/model/my_exception.dart';
 import 'package:path/path.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:yaml_writer/yaml_writer.dart';
 
 import '../model/annotation_task.dart';
@@ -39,12 +40,12 @@ class Repository {
     await _localDataSource.saveAnnotationTask(task);
   }
 
-  Stream<List<String>> watchLabels() {
-    return _localDataSource.watchLabels();
-  }
-
-  Stream<List<LabeledImage>> watchImages() {
-    return _localDataSource.watchImages();
+  Stream<AnnotationTask> watchAnnotationTask() {
+    return Rx.combineLatest2(
+        _localDataSource.watchLabels(), _localDataSource.watchImages(),
+        (labels, images) {
+      return AnnotationTask(labels: labels, images: images);
+    });
   }
 
   Future<void> updateImageLabel(
