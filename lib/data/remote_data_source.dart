@@ -7,7 +7,7 @@ import '../model/annotation_task.dart';
 
 part 'remote_data_source.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 RemoteDataSource remoteDataSource(RemoteDataSourceRef ref) {
   return RemoteDataSource();
 }

@@ -15,52 +15,21 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       previousImageIndex: 0,
       labels: [],
       progress: true,
-      error: null,
-      saveEffect: null);
+      error: null);
 
   void setError(MyError? error) {
     state = state.copyWith(error: error, progress: false);
   }
 
-  void setLoaded(AnnotationTask task) {
-    state = state.copyWith(
-        labels: task.labels, images: task.images, progress: false);
-  }
-
   /// Update selected image
-  void move(int diff) {
+  void move({required int diff, required int imagesLength}) {
     int nextIndex = state.imageIndex + diff;
-    if (nextIndex >= state.images.length) {
-      nextIndex = state.images.length - 1;
+    if (nextIndex >= imagesLength) {
+      nextIndex = imagesLength - 1;
     } else if (nextIndex < 0) {
       nextIndex = 0;
     }
     state = state.copyWith(
         imageIndex: nextIndex, previousImageIndex: state.imageIndex);
-  }
-
-  /// Update selected image's label
-  void update(int labelIndex) async {
-    if (labelIndex >= state.labels.length) {
-      return;
-    }
-    String label = state.labels[labelIndex];
-    List<LabeledImage> images = List.from(state.images);
-    var image = state.images[state.imageIndex];
-    image = image.copyWith(label: label);
-    images[state.imageIndex] = image;
-    state = state.copyWith(images: images, progress: false);
-  }
-
-  void startSave() {
-    state = state.copyWith(saveEffect: state.images, progress: true);
-  }
-
-  void onSaveStarted() {
-    state = state.copyWith(saveEffect: null);
-  }
-
-  void onSaveFinished() {
-    state = state.copyWith(progress: false);
   }
 }

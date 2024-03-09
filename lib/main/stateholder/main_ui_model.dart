@@ -11,12 +11,19 @@ class MainUiModel with _$MainUiModel {
       required int previousImageIndex,
       required List<String> labels,
       required bool progress,
-      required MyError? error,
-      required List<LabeledImage>? saveEffect}) = _MainUiModel;
+      required MyError? error}) = _MainUiModel;
 }
 
 extension MainUiModelExtension on MainUiModel {
-  bool shouldShowImage() {
-    return images.isNotEmpty;
+  bool isLoaded() {
+    return images.isNotEmpty && labels.isNotEmpty;
+  }
+
+  LabeledImage getCurrentImage() {
+    return images[imageIndex];
+  }
+
+  LabeledImage getPreviousImage() {
+    return images[previousImageIndex];
   }
 }

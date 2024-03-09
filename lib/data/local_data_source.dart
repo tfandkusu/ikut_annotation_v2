@@ -51,17 +51,18 @@ class LocalDataSource extends _$LocalDataSource {
 
   Future<void> saveAnnotationTask(AnnotationTask task) {
     return transaction(() async {
-      delete(localImages);
-      delete(localLabels);
+      await delete(localImages).go();
+      await delete(localLabels).go();
       for (final label in task.labels) {
-        into(localLabels).insert(LocalLabelsCompanion.insert(name: label));
+        await into(localLabels)
+            .insert(LocalLabelsCompanion.insert(name: label));
       }
       final savedLabels = await select(localLabels).get();
       Map<String, int> idMap = {
         for (var label in savedLabels) label.name: label.id
       };
       for (final image in task.images) {
-        into(localImages).insert(LocalImagesCompanion.insert(
+        await into(localImages).insert(LocalImagesCompanion.insert(
           url: image.url,
           labelId: idMap[image.label]!,
         ));

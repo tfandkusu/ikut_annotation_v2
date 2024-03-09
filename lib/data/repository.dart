@@ -17,7 +17,7 @@ import 'local_data_source_provider.dart';
 
 part 'repository.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Repository repository(RepositoryRef ref) {
   return Repository(
       ref.read(remoteDataSourceProvider), ref.read(localDataSourceProvider));

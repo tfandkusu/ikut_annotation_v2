@@ -13,7 +13,7 @@ class ImageWidget extends StatelessWidget {
     return Container(
       color: Colors.black,
       constraints: const BoxConstraints.expand(),
-      child: Image.file(File(image.url), fit: BoxFit.contain),
+      child: Image.network(image.url, fit: BoxFit.contain),
     );
   }
 }
