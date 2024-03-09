@@ -40,10 +40,22 @@ void main() {
       const taskUrl = "https://ikut-annotation-sample.web.app/task.yaml";
       final labels = ["takoyaki", "sushi", "gyoza", "other"];
       final images = [
-        const LabeledImage(id: 0, url: "img/01.png", label: "sushi"),
-        const LabeledImage(id: 0, url: "img/02.png", label: "takoyaki"),
-        const LabeledImage(id: 0, url: "img/03.png", label: "gyoza"),
-        const LabeledImage(id: 0, url: "img/04.png", label: "sushi"),
+        const LabeledImage(
+            id: 1,
+            url: "https://ikut-annotation-sample.web.app/image/1002013.jpg",
+            label: "sushi"),
+        const LabeledImage(
+            id: 2,
+            url: "https://ikut-annotation-sample.web.app/image/1002167.jpg",
+            label: "takoyaki"),
+        const LabeledImage(
+            id: 3,
+            url: "https://ikut-annotation-sample.web.app/image/1002237.jpg",
+            label: "gyoza"),
+        const LabeledImage(
+            id: 4,
+            url: "https://ikut-annotation-sample.web.app/image/1003289.jpg",
+            label: "sushi"),
       ];
       final task = AnnotationTask(labels: labels, images: images);
       when(() => remoteDataSource.load(taskUrl)).thenAnswer((_) async => task);
@@ -56,16 +68,9 @@ void main() {
       ]);
     });
   });
-  tw("watchLabels", () {
-    tt("get stream of label list", () async {
+  tw("watchAnnotationTask", () {
+    tt("get stream of AnnotationTask", () async {
       final labels = ["takoyaki", "sushi", "gyoza", "other"];
-      when(() => localDataSource.watchLabels())
-          .thenAnswer((_) => Stream.value(labels));
-      expect(labels, await repository.watchLabels().first);
-    });
-  });
-  tw("watchImages", () {
-    tt("get stream of image list", () async {
       final images = [
         const LabeledImage(
             id: 1,
@@ -84,9 +89,12 @@ void main() {
             url: "https://ikut-annotation-sample.web.app/image/1003289.jpg",
             label: "sushi"),
       ];
+      final annotationTask = AnnotationTask(labels: labels, images: images);
+      when(() => localDataSource.watchLabels())
+          .thenAnswer((_) => Stream.value(labels));
       when(() => localDataSource.watchImages())
           .thenAnswer((_) => Stream.value(images));
-      expect(images, await repository.watchImages().first);
+      expect(annotationTask, await repository.watchAnnotationTask().first);
     });
   });
   tw("updateImageLabel", () {
