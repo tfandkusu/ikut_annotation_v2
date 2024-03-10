@@ -2,7 +2,6 @@ import 'package:ikut_annotation_v2/model/my_exception.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/repository.dart';
-import '../../model/labeled_image.dart';
 import 'main_ui_model_state_notifier_provider.dart';
 
 part 'main_event_handler.g.dart';
@@ -15,31 +14,18 @@ class MainEventHandler {
 
   Future<void> load() async {
     try {
-      final annotationTask = await repository.load();
-      _stateHolder.setLoaded(annotationTask);
+      await repository.load();
     } on MyException catch (e) {
       _stateHolder.setError(e.myError);
     }
   }
 
-  void move(int diff) {
-    _stateHolder.move(diff);
+  void move({required int diff, required int imagesLength}) {
+    _stateHolder.move(diff: diff, imagesLength: imagesLength);
   }
 
-  void update(int labelIndex) {
-    _stateHolder.update(labelIndex);
-    _stateHolder.startSave();
-  }
-
-  Future<void> save(List<LabeledImage> images) async {
-    _stateHolder.onSaveStarted();
-    try {
-      await repository.saveResults(images);
-    } on MyException catch (e) {
-      _stateHolder.setError(e.myError);
-    } finally {
-      _stateHolder.onSaveFinished();
-    }
+  void update({required int imageId, required int labelIndex}) {
+    repository.updateImageLabel(imageId: imageId, labelIndex: labelIndex);
   }
 }
 

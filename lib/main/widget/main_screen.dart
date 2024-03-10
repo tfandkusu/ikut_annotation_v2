@@ -8,7 +8,6 @@ import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart';
 import 'package:ikut_annotation_v2/main/widget/image_widget.dart';
 
-import '../../util/view/check_one_shot_operation.dart';
 import '../i10n/localization.dart';
 
 class MainScreen extends HookConsumerWidget {
@@ -19,50 +18,52 @@ class MainScreen extends HookConsumerWidget {
     final uiModel = ref.watch(mainUiModelProvider);
     final eventHandler = ref.read(mainEventHandlerProvider);
     final localization = ref.watch(localizationProvider);
-    ref.listen(mainUiModelProvider, (previous, next) {
-      checkOneShotOperation(previous, next, (state) => state.saveEffect,
-          (saveTarget) {
-        eventHandler.save(saveTarget);
-      });
-    });
     useEffect(() {
       eventHandler.load();
       return () {};
     }, const []);
     final stackChildren = <Widget>[];
-    if (uiModel.shouldShowImage()) {
-      stackChildren
-          .add(ImageWidget(uiModel.images[uiModel.previousImageIndex]));
-      stackChildren.add(ImageWidget(uiModel.images[uiModel.imageIndex]));
+    if (uiModel.isLoaded()) {
+      final currentImage = uiModel.getCurrentImage();
+      final previousImage = uiModel.getPreviousImage();
+      stackChildren.add(ImageWidget(previousImage));
+      stackChildren.add(ImageWidget(currentImage));
+      stackChildren.add(_makeLabelButtons(context, uiModel, currentImage.id,
+          (imageId, labelIndex) {
+        eventHandler.update(imageId: imageId, labelIndex: labelIndex);
+      }));
     }
-    stackChildren.add(_makeLabelButtons(context, uiModel, (index) {
-      eventHandler.update(index);
-    }));
-    stackChildren.add(
-        _makePageMoveButtons(context, (int move) => eventHandler.move(move)));
+    stackChildren.add(_makePageMoveButtons(
+        context,
+        (int move) => eventHandler.move(
+            diff: move, imagesLength: uiModel.images.length)));
     if (uiModel.progress) {
       stackChildren.add(const Center(child: CircularProgressIndicator()));
     }
     return Focus(
       autofocus: true,
       onKey: (node, event) {
-        if (event is RawKeyDownEvent) {
-          if (event.logicalKey.keyLabel == ']') {
-            eventHandler.move(1);
-          } else if (event.logicalKey.keyLabel == '[') {
-            eventHandler.move(-1);
-          } else if (event.logicalKey.keyLabel == 'P') {
-            eventHandler.move(100);
-          } else if (event.logicalKey.keyLabel == 'O') {
-            eventHandler.move(-100);
-          } else if (event.logicalKey.keyLabel == 'Z') {
-            eventHandler.update(0);
-          } else if (event.logicalKey.keyLabel == 'X') {
-            eventHandler.update(1);
-          } else if (event.logicalKey.keyLabel == 'C') {
-            eventHandler.update(2);
-          } else if (event.logicalKey.keyLabel == 'V') {
-            eventHandler.update(3);
+        if (uiModel.isLoaded()) {
+          final currentImage = uiModel.getCurrentImage();
+          if (event is RawKeyDownEvent) {
+            if (event.logicalKey.keyLabel == ']') {
+              eventHandler.move(diff: 1, imagesLength: uiModel.images.length);
+            } else if (event.logicalKey.keyLabel == '[') {
+              eventHandler.move(diff: -1, imagesLength: uiModel.images.length);
+            } else if (event.logicalKey.keyLabel == 'P') {
+              eventHandler.move(diff: 100, imagesLength: uiModel.images.length);
+            } else if (event.logicalKey.keyLabel == 'O') {
+              eventHandler.move(
+                  diff: -100, imagesLength: uiModel.images.length);
+            } else if (event.logicalKey.keyLabel == 'Z') {
+              eventHandler.update(imageId: currentImage.id, labelIndex: 0);
+            } else if (event.logicalKey.keyLabel == 'X') {
+              eventHandler.update(imageId: currentImage.id, labelIndex: 1);
+            } else if (event.logicalKey.keyLabel == 'C') {
+              eventHandler.update(imageId: currentImage.id, labelIndex: 2);
+            } else if (event.logicalKey.keyLabel == 'V') {
+              eventHandler.update(imageId: currentImage.id, labelIndex: 3);
+            }
           }
         }
         return KeyEventResult.handled;
@@ -113,8 +114,8 @@ class MainScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _makeLabelButtons(
-      BuildContext context, MainUiModel uiModel, void Function(int) update) {
+  Widget _makeLabelButtons(BuildContext context, MainUiModel uiModel,
+      int imageId, void Function(int, int) update) {
     final textStyle = Theme.of(context)
         .textTheme
         .displayMedium
@@ -142,7 +143,7 @@ class MainScreen extends HookConsumerWidget {
                         context,
                         label == uiModel.images[uiModel.imageIndex].label,
                         label, () {
-                  update(index);
+                  update(imageId, index);
                 }));
               }).toList()))
         ],

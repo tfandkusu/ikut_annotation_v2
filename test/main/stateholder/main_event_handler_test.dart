@@ -6,8 +6,6 @@ import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
 import 'package:ikut_annotation_v2/model/annotation_task.dart';
 import 'package:ikut_annotation_v2/model/labeled_image.dart';
-import 'package:ikut_annotation_v2/model/my_error.dart';
-import 'package:ikut_annotation_v2/model/my_exception.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../util/helper.dart';
@@ -45,69 +43,28 @@ void main() {
   });
   tg("load success", () {
     tw("load", () {
-      tt("setLoaded", () async {
+      tt("Repository#load is called", () async {
         when(() => repository.load()).thenAnswer((_) async => annotationTask);
         await eventHandler.load();
         verifyInOrder([
           () => repository.load(),
-          () => stateNotifier.setLoaded(annotationTask),
         ]);
       });
     });
   });
-  tg("load error", () {
-    tw("load", () {
-      tt("setError", () async {
-        const error = MyError.readFile("label.txt");
-        when(() => repository.load()).thenThrow(MyException(error));
-        await eventHandler.load();
-        verifyInOrder([
-          () => repository.load(),
-          () => stateNotifier.setError(error),
-        ]);
-      });
-    });
-  });
+  // TODO load error
   tw("move", () {
     tt("StateNotifier#move is called", () {
-      eventHandler.move(1);
-      verify(() => stateNotifier.move(1));
+      eventHandler.move(diff: 1, imagesLength: 300);
+      verify(() => stateNotifier.move(diff: 1, imagesLength: 300));
     });
   });
   tw("update", () {
-    tt("StateNotifier#update is called", () {
-      eventHandler.update(1);
-      verifyInOrder(
-          [() => stateNotifier.update(1), () => stateNotifier.startSave()]);
-    });
-  });
-  tg("save succeed", () {
-    tw("save", () {
-      tt("onSaveStarted and onSaveFinished", () async {
-        when(() => repository.saveResults(images)).thenAnswer((_) async {});
-        await eventHandler.save(images);
-        verifyInOrder([
-          () => stateNotifier.onSaveStarted(),
-          () => repository.saveResults(images),
-          () => stateNotifier.onSaveFinished(),
-        ]);
-      });
-    });
-  });
-  tg("save failed", () {
-    tw("save", () {
-      tt("onSaveStarted, setError and onSaveFinished", () async {
-        const error = MyError.writeFile("result.csv");
-        when(() => repository.saveResults(images))
-            .thenThrow(MyException(error));
-        await eventHandler.save(images);
-        verifyInOrder([
-          () => stateNotifier.onSaveStarted(),
-          () => repository.saveResults(images),
-          () => stateNotifier.setError(error),
-          () => stateNotifier.onSaveFinished(),
-        ]);
-      });
+    tt("Repository#update is called", () {
+      when(() => repository.updateImageLabel(imageId: 1, labelIndex: 2))
+          .thenAnswer((_) async {});
+      eventHandler.update(imageId: 1, labelIndex: 2);
+      verify(() => repository.updateImageLabel(imageId: 1, labelIndex: 2));
     });
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:ikut_annotation_v2/model/labeled_image.dart';
 
@@ -13,7 +11,7 @@ class ImageWidget extends StatelessWidget {
     return Container(
       color: Colors.black,
       constraints: const BoxConstraints.expand(),
-      child: Image.file(File(image.url), fit: BoxFit.contain),
+      child: Image.network(image.url, fit: BoxFit.contain),
     );
   }
 }
