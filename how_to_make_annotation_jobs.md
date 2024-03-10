@@ -18,7 +18,7 @@ An annotation job consists of the following files.
 
 Both must be HTTPS hosted. Workers can start an annotation job by entering the URL of athe YAML file.
 
-# A YAML file
+## A YAML file
 
 | key | value |
 | --- | --- |
@@ -32,7 +32,7 @@ Elements of `images`.
 | label | The label of image |
 | url | URL of image (`https://` schema) |
 
-## Example
+### Example
 
 ```yaml
 labels:
