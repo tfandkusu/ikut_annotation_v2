@@ -13,7 +13,8 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       previousImageIndex: 0,
       labels: [],
       progress: true,
-      error: null);
+      error: null,
+      showAnnotationTaskSelection: false);
 
   void setError(MyError? error) {
     state = state.copyWith(error: error, progress: false);
@@ -29,5 +30,9 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
     }
     state = state.copyWith(
         imageIndex: nextIndex, previousImageIndex: state.imageIndex);
+  }
+
+  void setShowAnnotationTaskSelection(bool show) {
+    state = state.copyWith(showAnnotationTaskSelection: show);
   }
 }

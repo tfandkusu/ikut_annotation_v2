@@ -11,7 +11,8 @@ class MainUiModel with _$MainUiModel {
       required int previousImageIndex,
       required List<String> labels,
       required bool progress,
-      required MyError? error}) = _MainUiModel;
+      required MyError? error,
+      required bool showAnnotationTaskSelection}) = _MainUiModel;
 }
 
 extension MainUiModelExtension on MainUiModel {

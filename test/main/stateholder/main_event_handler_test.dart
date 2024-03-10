@@ -67,4 +67,16 @@ void main() {
       verify(() => repository.updateImageLabel(imageId: 1, labelIndex: 2));
     });
   });
+  tw("onClickSelectAnnotationJob", () {
+    tt("StateNotifier#setShowAnnotationTaskSelection(true) is called", () {
+      eventHandler.onClickSelectAnnotationJob();
+      verify(() => stateNotifier.setShowAnnotationTaskSelection(true));
+    });
+  });
+  tw("onNavigateToAnnotationJobSelection", () {
+    tt("StateNotifier#setShowAnnotationTaskSelection(false) is called", () {
+      eventHandler.onNavigateToAnnotationJobSelection();
+      verify(() => stateNotifier.setShowAnnotationTaskSelection(false));
+    });
+  });
 }

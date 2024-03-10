@@ -46,7 +46,8 @@ void main() {
                 previousImageIndex: 0,
                 labels: labels,
                 progress: false,
-                error: null));
+                error: null,
+                showAnnotationTaskSelection: false));
       });
     });
   });
@@ -68,7 +69,8 @@ void main() {
                 previousImageIndex: 0,
                 labels: [],
                 progress: true,
-                error: null));
+                error: null,
+                showAnnotationTaskSelection: false));
       });
     });
   });

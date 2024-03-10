@@ -25,7 +25,8 @@ void main() {
               previousImageIndex: 0,
               labels: [],
               progress: true,
-              error: null));
+              error: null,
+              showAnnotationTaskSelection: false));
       stateNotifier.move(diff: 2, imagesLength: 5);
       expect(
           getState(),
@@ -35,7 +36,8 @@ void main() {
               previousImageIndex: 1,
               labels: [],
               progress: true,
-              error: null));
+              error: null,
+              showAnnotationTaskSelection: false));
     });
   });
   tw("move under zero", () {
@@ -49,7 +51,8 @@ void main() {
               previousImageIndex: 0,
               labels: [],
               progress: true,
-              error: null));
+              error: null,
+              showAnnotationTaskSelection: false));
     });
   });
   tw("move over images.count", () {
@@ -63,7 +66,23 @@ void main() {
               previousImageIndex: 0,
               labels: [],
               progress: true,
-              error: null));
+              error: null,
+              showAnnotationTaskSelection: false));
+    });
+  });
+  tw("setShowAnnotationTaskSelection", () {
+    tt("update showAnnotationTaskSelection", () {
+      stateNotifier.setShowAnnotationTaskSelection(true);
+      expect(
+          getState(),
+          const MainUiModel(
+              images: [],
+              imageIndex: 0,
+              previousImageIndex: 0,
+              labels: [],
+              progress: true,
+              error: null,
+              showAnnotationTaskSelection: true));
     });
   });
 }

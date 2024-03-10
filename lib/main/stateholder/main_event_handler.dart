@@ -27,6 +27,14 @@ class MainEventHandler {
   void update({required int imageId, required int labelIndex}) {
     repository.updateImageLabel(imageId: imageId, labelIndex: labelIndex);
   }
+
+  void onClickSelectAnnotationJob() {
+    _stateHolder.setShowAnnotationTaskSelection(true);
+  }
+
+  void onNavigateToAnnotationJobSelection() {
+    _stateHolder.setShowAnnotationTaskSelection(false);
+  }
 }
 
 @riverpod
