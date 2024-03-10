@@ -8,7 +8,6 @@ import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart';
 import 'package:ikut_annotation_v2/main/widget/image_widget.dart';
 
-import '../../util/view/check_one_shot_operation.dart';
 import '../i10n/localization.dart';
 
 class MainScreen extends HookConsumerWidget {

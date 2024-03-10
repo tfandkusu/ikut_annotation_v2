@@ -16,7 +16,6 @@ void main() {
             previousImageIndex: 0,
             labels: [],
             progress: true,
-            error: null,
-            saveEffect: null));
+            error: null));
   });
 }
