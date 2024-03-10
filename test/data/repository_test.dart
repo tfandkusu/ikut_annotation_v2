@@ -61,7 +61,7 @@ void main() {
       when(() => remoteDataSource.load(taskUrl)).thenAnswer((_) async => task);
       when(() => localDataSource.saveAnnotationTask(task))
           .thenAnswer((_) async {});
-      await repository.loadV2();
+      await repository.load();
       verifyInOrder([
         () => remoteDataSource.load(taskUrl),
         () => localDataSource.saveAnnotationTask(task),
@@ -142,65 +142,6 @@ images:
     label: 'gyoza'
 """;
       expect(answer, yaml);
-    });
-  });
-
-  tg("File exists", () {
-    tw("load", () {
-      tt("It returns labels", () async {
-        final dir = Directory.current.path.toString();
-        final task = await repository.load();
-        expect(task.labels, ["takoyaki", "sushi", "gyoza", "other"]);
-        expect(task.images.length, 300);
-        expect(
-            task.images[0],
-            LabeledImage(
-                id: 1, url: "$dir/image/1002013.jpg", label: "takoyaki"));
-        expect(task.images[4],
-            LabeledImage(id: 5, url: "$dir/image/100332.jpg", label: "sushi"));
-        expect(
-            task.images[299],
-            LabeledImage(
-                id: 300, url: "$dir/image/1399892.jpg", label: "takoyaki"));
-      });
-    });
-    tw("saveResults", () {
-      tt("Result file is saved", () async {
-        const testResultFileName = "result_test.csv";
-        final task = await repository.load();
-        final images = task.images;
-        await repository.saveResults(images,
-            resultFileName: testResultFileName);
-        final savedTask =
-            await repository.load(resultFileName: testResultFileName);
-        expect(savedTask.images[0], task.images[0]);
-        final dir = Directory.current.path.toString();
-        await File("$dir/$testResultFileName").delete();
-      });
-    });
-  });
-  tg("Label file does not exists", () {
-    tw("load", () {
-      tt("IOException", () async {
-        try {
-          await repository.load(labelFileName: "notExist.txt");
-          fail("It should throw error");
-        } catch (e) {
-          expect(e, MyException(const MyError.readFile("notExist.txt")));
-        }
-      });
-    });
-  });
-  tg("result file does not exists", () {
-    tw("load", () {
-      tt("IOException", () async {
-        try {
-          await repository.load(resultFileName: "notExist.txt");
-          fail("It should throw error");
-        } catch (e) {
-          expect(e, MyException(const MyError.readFile("notExist.txt")));
-        }
-      });
     });
   });
 }

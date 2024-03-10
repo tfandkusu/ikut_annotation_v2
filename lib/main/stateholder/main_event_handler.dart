@@ -14,7 +14,7 @@ class MainEventHandler {
 
   Future<void> load() async {
     try {
-      await repository.loadV2();
+      await repository.load();
     } on MyException catch (e) {
       _stateHolder.setError(e.myError);
     }
