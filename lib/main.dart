@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ikut_annotation_v2/main/widget/main_screen.dart';
+import 'package:ikut_annotation_v2/screen/main/widget/main_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: IkutAnnotationApp()));

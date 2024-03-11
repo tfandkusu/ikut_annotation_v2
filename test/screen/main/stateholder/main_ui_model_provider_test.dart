@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ikut_annotation_v2/data/annotation_task_provider.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model_provider.dart';
 import 'package:ikut_annotation_v2/model/annotation_task.dart';
 import 'package:ikut_annotation_v2/model/labeled_image.dart';
 
-import '../../util/helper.dart';
-import '../../util/provider_container.dart';
+import '../../../util/helper.dart';
+import '../../../util/provider_container.dart';
 
 void main() {
   tg("AnnotationTask is loaded", () {

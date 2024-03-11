@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_state_notifier_provider.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model_state_notifier_provider.dart';
 
-import '../../util/helper.dart';
-import '../../util/provider_container.dart';
+import '../../../util/helper.dart';
+import '../../../util/provider_container.dart';
 
 void main() {
   late ProviderContainer container;

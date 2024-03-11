@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_event_handler.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart';
-import 'package:ikut_annotation_v2/main/widget/image_widget.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model_provider.dart';
+import 'package:ikut_annotation_v2/screen/main/widget/image_widget.dart';
 
-import '../i10n/localization.dart';
+import '../../i10n/localization.dart';
+import '../stateholder/main_event_handler.dart';
 
 class MainScreen extends HookConsumerWidget {
   const MainScreen({super.key});
