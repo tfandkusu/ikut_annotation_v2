@@ -51,4 +51,16 @@ void main() {
           ));
     });
   });
+  tw("reset", () {
+    tt("reset imageIndex and previous index", () {
+      stateNotifier.move(diff: 1, imagesLength: 3);
+      stateNotifier.reset();
+      expect(
+          getState(),
+          const ImageIndex(
+            imageIndex: 0,
+            previousImageIndex: 0,
+          ));
+    });
+  });
 }

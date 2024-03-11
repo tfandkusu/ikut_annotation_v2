@@ -19,4 +19,8 @@ class ImageIndexStateNotifier extends _$ImageIndexStateNotifier {
     state = state.copyWith(
         imageIndex: nextIndex, previousImageIndex: state.imageIndex);
   }
+
+  void reset() {
+    state = state.copyWith(imageIndex: 0, previousImageIndex: 0);
+  }
 }
