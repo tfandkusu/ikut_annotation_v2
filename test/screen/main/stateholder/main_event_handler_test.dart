@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ikut_annotation_v2/data/image_index_state_notifier_provider.dart';
 import 'package:ikut_annotation_v2/data/repository.dart';
+import 'package:ikut_annotation_v2/model/image_index.dart';
 import 'package:ikut_annotation_v2/screen/main/stateholder/main_event_handler.dart';
 import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model_state_notifier_provider.dart';
@@ -14,6 +16,10 @@ import '../../../util/provider_container.dart';
 class MainUiModelStateNotifierMock extends AutoDisposeNotifier<MainUiModel>
     with Mock
     implements MainUiModelStateNotifier {}
+
+class ImageIndexStateNotifierMock extends Notifier<ImageIndex>
+    with Mock
+    implements ImageIndexStateNotifier {}
 
 class RepositoryMock extends Mock implements Repository {}
 
@@ -30,13 +36,17 @@ void main() {
   late MainEventHandler eventHandler;
   late RepositoryMock repository;
   late MainUiModelStateNotifierMock stateNotifier;
+  late ImageIndexStateNotifierMock imageIndexStateNotifier;
   setUp(() {
     repository = RepositoryMock();
     stateNotifier = MainUiModelStateNotifierMock();
+    imageIndexStateNotifier = ImageIndexStateNotifierMock();
     container = createContainer(
       overrides: [
         repositoryProvider.overrideWith((ref) => repository),
         mainUiModelStateNotifierProvider.overrideWith(() => stateNotifier),
+        imageIndexStateNotifierProvider
+            .overrideWith(() => imageIndexStateNotifier)
       ],
     );
     eventHandler = container.read(mainEventHandlerProvider);
@@ -56,7 +66,7 @@ void main() {
   tw("move", () {
     tt("StateNotifier#move is called", () {
       eventHandler.move(diff: 1, imagesLength: 300);
-      verify(() => stateNotifier.move(diff: 1, imagesLength: 300));
+      verify(() => imageIndexStateNotifier.move(diff: 1, imagesLength: 300));
     });
   });
   tw("update", () {

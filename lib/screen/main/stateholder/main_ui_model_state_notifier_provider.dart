@@ -1,5 +1,4 @@
 import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
-import 'package:ikut_annotation_v2/model/my_error.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'main_ui_model_state_notifier_provider.g.dart';
@@ -15,22 +14,6 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       progress: true,
       error: null,
       showAnnotationTaskSelection: false);
-
-  void setError(MyError? error) {
-    state = state.copyWith(error: error, progress: false);
-  }
-
-  /// Update selected image
-  void move({required int diff, required int imagesLength}) {
-    int nextIndex = state.imageIndex + diff;
-    if (nextIndex >= imagesLength) {
-      nextIndex = imagesLength - 1;
-    } else if (nextIndex < 0) {
-      nextIndex = 0;
-    }
-    state = state.copyWith(
-        imageIndex: nextIndex, previousImageIndex: state.imageIndex);
-  }
 
   void setShowAnnotationTaskSelection(bool show) {
     state = state.copyWith(showAnnotationTaskSelection: show);
