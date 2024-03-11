@@ -12,4 +12,24 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
       progress: false,
       showAnnotationTaskGuideEffect: false,
       backEffect: false);
+
+  void setSelectedAnnotationTaskKind(AnnotationTaskKind kind) {
+    state = state.copyWith(selectedAnnotationTaskKind: kind);
+  }
+
+  void setAnnotationTaskUrl(String url) {
+    state = state.copyWith(annotationTaskUrl: url);
+  }
+
+  void setProgress(bool progress) {
+    state = state.copyWith(progress: progress);
+  }
+
+  void setShowAnnotationTaskGuideEffect(bool show) {
+    state = state.copyWith(showAnnotationTaskGuideEffect: show);
+  }
+
+  void setBackEffect(bool backEffect) {
+    state = state.copyWith(backEffect: backEffect);
+  }
 }
