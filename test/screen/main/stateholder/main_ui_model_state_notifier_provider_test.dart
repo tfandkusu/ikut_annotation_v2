@@ -14,9 +14,9 @@ void main() {
     stateNotifier = container.read(mainUiModelStateNotifierProvider.notifier);
   });
   getState() => container.read(mainUiModelStateNotifierProvider);
-  tw("setShowAnnotationTaskSelection", () {
-    tt("update showAnnotationTaskSelection", () {
-      stateNotifier.setShowAnnotationTaskSelection(true);
+  tw("setShowAnnotationTaskSelectionEffect", () {
+    tt("update showAnnotationTaskSelectionEffect", () {
+      stateNotifier.setShowAnnotationTaskSelectionEffect(true);
       expect(
           getState(),
           const MainUiModel(
@@ -25,8 +25,7 @@ void main() {
               previousImageIndex: 0,
               labels: [],
               progress: true,
-              error: null,
-              showAnnotationTaskSelection: true));
+              showAnnotationTaskSelectionEffect: true));
     });
   });
 }

@@ -12,6 +12,6 @@ class SelectionUiModel with _$SelectionUiModel {
       {required AnnotationTaskKind selectedAnnotationTaskKind,
       required String annotationTaskUrl,
       required bool progress,
-      required bool showAnnotationTaskGuide,
-      required bool back}) = _SelectionUiModel;
+      required bool showAnnotationTaskGuideEffect,
+      required bool backEffect}) = _SelectionUiModel;
 }

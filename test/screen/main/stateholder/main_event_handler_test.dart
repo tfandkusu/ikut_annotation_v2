@@ -78,15 +78,17 @@ void main() {
     });
   });
   tw("onClickSelectAnnotationJob", () {
-    tt("StateNotifier#setShowAnnotationTaskSelection(true) is called", () {
+    tt("StateNotifier#setShowAnnotationTaskSelectionEffect(true) is called",
+        () {
       eventHandler.onClickSelectAnnotationJob();
-      verify(() => stateNotifier.setShowAnnotationTaskSelection(true));
+      verify(() => stateNotifier.setShowAnnotationTaskSelectionEffect(true));
     });
   });
   tw("onNavigateToAnnotationJobSelection", () {
-    tt("StateNotifier#setShowAnnotationTaskSelection(false) is called", () {
+    tt("StateNotifier#setShowAnnotationTaskSelectionEffect(false) is called",
+        () {
       eventHandler.onNavigateToAnnotationJobSelection();
-      verify(() => stateNotifier.setShowAnnotationTaskSelection(false));
+      verify(() => stateNotifier.setShowAnnotationTaskSelectionEffect(false));
     });
   });
 }

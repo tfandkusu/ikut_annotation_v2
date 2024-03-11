@@ -27,11 +27,11 @@ class MainEventHandler {
   }
 
   void onClickSelectAnnotationJob() {
-    _stateHolder.setShowAnnotationTaskSelection(true);
+    _stateHolder.setShowAnnotationTaskSelectionEffect(true);
   }
 
   void onNavigateToAnnotationJobSelection() {
-    _stateHolder.setShowAnnotationTaskSelection(false);
+    _stateHolder.setShowAnnotationTaskSelectionEffect(false);
   }
 }
 

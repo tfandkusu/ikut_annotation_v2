@@ -12,10 +12,9 @@ class MainUiModelStateNotifier extends _$MainUiModelStateNotifier {
       previousImageIndex: 0,
       labels: [],
       progress: true,
-      error: null,
-      showAnnotationTaskSelection: false);
+      showAnnotationTaskSelectionEffect: false);
 
-  void setShowAnnotationTaskSelection(bool show) {
-    state = state.copyWith(showAnnotationTaskSelection: show);
+  void setShowAnnotationTaskSelectionEffect(bool show) {
+    state = state.copyWith(showAnnotationTaskSelectionEffect: show);
   }
 }
