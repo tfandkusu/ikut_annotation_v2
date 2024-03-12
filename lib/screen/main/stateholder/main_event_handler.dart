@@ -14,8 +14,14 @@ class MainEventHandler {
   MainEventHandler(
       this._stateHolder, this._imageIndexStateNotifier, this.repository);
 
-  Future<void> load() async {
-    await repository.load();
+  Future<void> onCreate() async {
+    if (await repository.hasAnnotationTask()) {
+      _stateHolder.setShowAnnotationTaskSelectionEffect(true);
+    }
+  }
+
+  void onNavigateToSelection() {
+    _stateHolder.setShowAnnotationTaskSelectionEffect(false);
   }
 
   void move({required int diff, required int imagesLength}) {

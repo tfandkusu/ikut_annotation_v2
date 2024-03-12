@@ -24,7 +24,9 @@ void main() {
         const LabeledImage(id: 4, url: "img/04.png", label: "sushi"),
       ];
       final annotationTask = AnnotationTask(labels: labels, images: images);
+      expect(false, await dataSource.hasAnnotationTask());
       await dataSource.saveAnnotationTask(annotationTask);
+      expect(true, await dataSource.hasAnnotationTask());
       expect(labels, await dataSource.watchLabels().first);
       expect(images, await dataSource.watchImages().first);
     });

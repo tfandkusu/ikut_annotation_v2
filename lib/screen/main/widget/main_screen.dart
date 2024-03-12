@@ -19,7 +19,7 @@ class MainScreen extends HookConsumerWidget {
     final eventHandler = ref.read(mainEventHandlerProvider);
     final localization = ref.watch(localizationProvider);
     useEffect(() {
-      eventHandler.load();
+      eventHandler.onCreate();
       return () {};
     }, const []);
     final stackChildren = <Widget>[];

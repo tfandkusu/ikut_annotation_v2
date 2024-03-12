@@ -17,8 +17,8 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
     state = state.copyWith(selectedAnnotationTaskKind: kind);
   }
 
-  void setAnnotationTaskUrl(String url) {
-    state = state.copyWith(annotationTaskUrl: url);
+  void setAnnotationTaskUrl(String annotationTaskUrl) {
+    state = state.copyWith(annotationTaskUrl: annotationTaskUrl);
   }
 
   void setProgress(bool progress) {

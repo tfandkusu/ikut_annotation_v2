@@ -70,6 +70,11 @@ class LocalDataSource extends _$LocalDataSource {
     });
   }
 
+  Future<bool> hasAnnotationTask() async {
+    final labels = await select(localLabels).get();
+    return labels.isNotEmpty;
+  }
+
   Stream<List<String>> watchLabels() {
     return (select(localLabels)
           ..orderBy([(t) => OrderingTerm(expression: t.id)]))
