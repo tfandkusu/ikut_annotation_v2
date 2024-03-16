@@ -15,5 +15,6 @@ abstract base class Localization {
   String get selectionYourSubTitle;
   String get selectionAnnotationTaskUrl;
   String get selectionAnnotationTaskUrlPlaceHolder;
+  String get selectionHowToDefineAnnotationTask;
   String get selectionOpenYourTask;
 }

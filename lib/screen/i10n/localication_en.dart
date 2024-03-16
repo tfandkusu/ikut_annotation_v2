@@ -25,4 +25,8 @@ final class LocalizationEn extends Localization {
   @override
   String get selectionAnnotationTaskUrlPlaceHolder =>
       "https://ikut-annotation-sample.web.app/task.yaml";
+
+  @override
+  String get selectionHowToDefineAnnotationTask =>
+      "How to define annotation task";
 }
