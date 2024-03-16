@@ -10,6 +10,7 @@ class SelectionUiModel with _$SelectionUiModel {
       required String annotationTaskUrl,
       required bool openYourTaskButtonEnabled,
       required bool progress,
+      required bool errorEffect,
       required bool showAnnotationTaskGuideEffect,
       required bool backEffect}) = _SelectionUiModel;
 }

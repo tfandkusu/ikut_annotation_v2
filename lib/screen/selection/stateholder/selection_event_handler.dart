@@ -27,9 +27,17 @@ class SelectionEventHandler {
 
   Future<void> onClickYourTask(String taskUrl) async {
     _stateNotifier.setProgress(true);
-    await _repository.load(taskUrl);
-    _imageIndexStateNotifier.reset();
-    _stateNotifier.setBackEffect(true);
+    try {
+      await _repository.load(taskUrl);
+      _imageIndexStateNotifier.reset();
+      _stateNotifier.setBackEffect(true);
+    } catch (e) {
+      _stateNotifier.setError(true);
+    }
+  }
+
+  void onShownErrorDialog() {
+    _stateNotifier.setError(false);
   }
 
   void onClickAnnotationTaskGuide() {

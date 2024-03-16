@@ -70,18 +70,36 @@ void main() {
       verify(() => stateNotifier.setAnnotationTaskUrl(annotationTaskUrl));
     });
   });
-  tw("onClickSampleTask", () {
-    tt("AnnotationTask is loaded, image's index is reset and back to main",
-        () async {
-      const sampleTaskUrl = "https://ikut-annotation-sample.web.app/task.yaml";
-      when(() => repository.load(sampleTaskUrl)).thenAnswer((_) async {});
-      await eventHandler.onClickSampleTask();
-      verifyInOrder([
-        () => stateNotifier.setProgress(true),
-        () => repository.load(sampleTaskUrl),
-        () => imageIndexStateNotifier.reset(),
-        () => stateNotifier.setBackEffect(true),
-      ]);
+  tg("load success", () {
+    tw("onClickSampleTask", () {
+      tt("AnnotationTask is loaded, image's index is reset and back to main",
+          () async {
+        const sampleTaskUrl =
+            "https://ikut-annotation-sample.web.app/task.yaml";
+        when(() => repository.load(sampleTaskUrl)).thenAnswer((_) async {});
+        await eventHandler.onClickSampleTask();
+        verifyInOrder([
+          () => stateNotifier.setProgress(true),
+          () => repository.load(sampleTaskUrl),
+          () => imageIndexStateNotifier.reset(),
+          () => stateNotifier.setBackEffect(true),
+        ]);
+      });
+    });
+  });
+  tg("load failed", () {
+    tw("onClickSampleTask", () {
+      tt("Error is shown", () async {
+        const sampleTaskUrl =
+            "https://ikut-annotation-sample.web.app/task.yaml";
+        when(() => repository.load(sampleTaskUrl)).thenThrow(Exception());
+        await eventHandler.onClickSampleTask();
+        verifyInOrder([
+          () => stateNotifier.setProgress(true),
+          () => repository.load(sampleTaskUrl),
+          () => stateNotifier.setError(true),
+        ]);
+      });
     });
   });
   tw("onClickYourTask", () {
@@ -108,6 +126,12 @@ void main() {
     tt("uiModel's howAnnotationTaskGuideEffect is false", () {
       eventHandler.onShownAnnotationTaskGuide();
       verify(() => stateNotifier.setShowAnnotationTaskGuideEffect(false));
+    });
+  });
+  tw("onShownErrorDialog", () {
+    tt("uiModel's error is false", () {
+      eventHandler.onShownErrorDialog();
+      verify(() => stateNotifier.setError(false));
     });
   });
 }

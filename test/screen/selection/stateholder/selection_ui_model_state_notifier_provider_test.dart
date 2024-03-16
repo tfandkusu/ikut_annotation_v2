@@ -26,6 +26,7 @@ void main() {
               annotationTaskUrl: "",
               openYourTaskButtonEnabled: false,
               progress: false,
+              errorEffect: false,
               showAnnotationTaskGuideEffect: false,
               backEffect: false));
     });
@@ -41,6 +42,7 @@ void main() {
               annotationTaskUrl: "https://",
               openYourTaskButtonEnabled: true,
               progress: true,
+              errorEffect: false,
               showAnnotationTaskGuideEffect: false,
               backEffect: false));
     });

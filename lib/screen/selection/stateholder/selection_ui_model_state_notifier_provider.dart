@@ -11,6 +11,7 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
       openSampleTaskButtonEnabled: true,
       annotationTaskUrl: "",
       progress: true,
+      errorEffect: false,
       openYourTaskButtonEnabled: false,
       showAnnotationTaskGuideEffect: false,
       backEffect: false);
@@ -36,5 +37,9 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
 
   void setBackEffect(bool backEffect) {
     state = state.copyWith(backEffect: backEffect);
+  }
+
+  void setError(bool errorEffect) {
+    state = state.copyWith(errorEffect: errorEffect, progress: false);
   }
 }

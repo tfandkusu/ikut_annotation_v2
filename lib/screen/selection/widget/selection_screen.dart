@@ -36,6 +36,27 @@ class SelectionScreen extends HookConsumerWidget {
               "https://github.com/tfandkusu/ikut_annotation_v2/blob/main/how_to_define_annotation_jobs.md"));
         }
       });
+      checkOneShotOperation(previous, next, (uiModel) => uiModel.errorEffect,
+          (errorEffect) {
+        if (errorEffect) {
+          eventHandler.onShownErrorDialog();
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text(localization.errorTitle),
+                  content: Text(localization.errorAnnotationTaskLoad),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(localization.ok))
+                  ],
+                );
+              });
+        }
+      });
     });
     return PopScope(
       canPop: uiModel.canPop,

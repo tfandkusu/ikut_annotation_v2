@@ -29,4 +29,13 @@ final class LocalizationEn extends Localization {
   @override
   String get selectionHowToDefineAnnotationTask =>
       "How to define annotation task";
+
+  @override
+  String get errorAnnotationTaskLoad => "Failed to load annotation job.";
+
+  @override
+  String get errorTitle => "Error";
+
+  @override
+  String get ok => "Ok";
 }
