@@ -43,8 +43,8 @@ class SelectionScreen extends HookConsumerWidget {
               ],
             )),
         if (uiModel.progress)
-          ModalBarrier(
-            color: Colors.black.withOpacity(0.5),
+          const ModalBarrier(
+            color: Colors.black54,
             dismissible: false,
           ),
         if (uiModel.progress)

@@ -83,6 +83,15 @@ class MainScreen extends HookConsumerWidget {
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(localization.appName),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.file_open),
+                tooltip: localization.selectionTitle,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/selection');
+                },
+              ),
+            ],
           ),
           body: Stack(
             children: stackChildren,
