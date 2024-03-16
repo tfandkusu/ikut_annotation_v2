@@ -57,10 +57,20 @@ void main() {
       when(() => remoteDataSource.load(taskUrl)).thenAnswer((_) async => task);
       when(() => localDataSource.saveAnnotationTask(task))
           .thenAnswer((_) async {});
-      await repository.load();
+      await repository.load(taskUrl);
       verifyInOrder([
         () => remoteDataSource.load(taskUrl),
         () => localDataSource.saveAnnotationTask(task),
+      ]);
+    });
+  });
+  tw("hasAnnotationTask", () {
+    tt("localDataSource is called", () async {
+      when(() => localDataSource.hasAnnotationTask())
+          .thenAnswer((_) async => true);
+      expect(true, await repository.hasAnnotationTask());
+      verifyInOrder([
+        () => localDataSource.hasAnnotationTask(),
       ]);
     });
   });

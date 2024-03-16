@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_event_handler.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model.dart';
-import 'package:ikut_annotation_v2/main/stateholder/main_ui_model_provider.dart';
-import 'package:ikut_annotation_v2/main/widget/image_widget.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
+import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model_provider.dart';
+import 'package:ikut_annotation_v2/screen/main/widget/image_widget.dart';
+import 'package:ikut_annotation_v2/util/view/check_one_shot_operation.dart';
 
-import '../i10n/localization.dart';
+import '../../i10n/localization.dart';
+import '../stateholder/main_event_handler.dart';
 
 class MainScreen extends HookConsumerWidget {
   const MainScreen({super.key});
@@ -19,9 +20,19 @@ class MainScreen extends HookConsumerWidget {
     final eventHandler = ref.read(mainEventHandlerProvider);
     final localization = ref.watch(localizationProvider);
     useEffect(() {
-      eventHandler.load();
+      eventHandler.onCreate();
       return () {};
     }, const []);
+    ref.listen(mainUiModelProvider, (previous, next) {
+      checkOneShotOperation(previous, next,
+          (uiModel) => uiModel.showAnnotationTaskSelectionEffect,
+          (showAnnotationTaskSelectionEffect) {
+        if (showAnnotationTaskSelectionEffect) {
+          Navigator.pushNamed(context, '/selection');
+          eventHandler.onNavigateToAnnotationJobSelection();
+        }
+      });
+    });
     final stackChildren = <Widget>[];
     if (uiModel.isLoaded()) {
       final currentImage = uiModel.getCurrentImage();
@@ -72,6 +83,15 @@ class MainScreen extends HookConsumerWidget {
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(localization.appName),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.file_open),
+                tooltip: localization.selectionTitle,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/selection');
+                },
+              ),
+            ],
           ),
           body: Stack(
             children: stackChildren,

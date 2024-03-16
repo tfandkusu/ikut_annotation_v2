@@ -22,9 +22,12 @@ class Repository {
 
   Repository(this._remoteDataSource, this._localDataSource);
 
-  Future<void> load() async {
-    final task = await _remoteDataSource
-        .load("https://ikut-annotation-sample.web.app/task.yaml");
+  Future<bool> hasAnnotationTask() async {
+    return _localDataSource.hasAnnotationTask();
+  }
+
+  Future<void> load(String taskUrl) async {
+    final task = await _remoteDataSource.load(taskUrl);
     await _localDataSource.saveAnnotationTask(task);
   }
 
