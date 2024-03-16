@@ -10,11 +10,14 @@ class SelectionScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localization = ref.watch(localizationProvider);
 
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(localization.selectionTitle),
-        ),
-        body: const Text("SelectionScreen"));
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: Text(localization.selectionTitle),
+          ),
+          body: const Text("SelectionScreen")),
+    );
   }
 }
