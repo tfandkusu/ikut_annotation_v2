@@ -9,13 +9,13 @@ part 'main_event_handler.g.dart';
 class MainEventHandler {
   final MainUiModelStateNotifier _stateHolder;
   final ImageIndexStateNotifier _imageIndexStateNotifier;
-  final Repository repository;
+  final Repository _repository;
 
   MainEventHandler(
-      this._stateHolder, this._imageIndexStateNotifier, this.repository);
+      this._stateHolder, this._imageIndexStateNotifier, this._repository);
 
   Future<void> onCreate() async {
-    if (!(await repository.hasAnnotationTask())) {
+    if (!(await _repository.hasAnnotationTask())) {
       _stateHolder.setShowAnnotationTaskSelectionEffect(true);
     }
   }
@@ -25,7 +25,7 @@ class MainEventHandler {
   }
 
   void update({required int imageId, required int labelIndex}) {
-    repository.updateImageLabel(imageId: imageId, labelIndex: labelIndex);
+    _repository.updateImageLabel(imageId: imageId, labelIndex: labelIndex);
   }
 
   void onClickSelectAnnotationJob() {

@@ -43,6 +43,26 @@ void main() {
     );
     eventHandler = container.read(selectionEventHandlerProvider);
   });
+  tg("AnnotationTask is loaded", () {
+    tw("onCreate", () {
+      tt("uiModel's canPop is true", () async {
+        when(() => repository.hasAnnotationTask())
+            .thenAnswer((_) async => true);
+        await eventHandler.onCreate();
+        verify(() => stateNotifier.setCanPopAsTrue());
+      });
+    });
+  });
+  tg("AnnotationTask is not loaded", () {
+    tw("onCreate", () {
+      tt("uiModel's canPop is false", () async {
+        when(() => repository.hasAnnotationTask())
+            .thenAnswer((_) async => false);
+        await eventHandler.onCreate();
+        verifyNever(() => stateNotifier.setCanPopAsTrue());
+      });
+    });
+  });
   tw("selectAnnotationTaskKind", () {
     tt("uiModel's selectedAnnotationTaskKind is updated", () {
       eventHandler.selectAnnotationTaskKind(AnnotationTaskKind.yours);

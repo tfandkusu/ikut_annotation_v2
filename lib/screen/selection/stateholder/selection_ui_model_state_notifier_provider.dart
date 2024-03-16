@@ -7,11 +7,16 @@ part 'selection_ui_model_state_notifier_provider.g.dart';
 class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
   @override
   SelectionUiModel build() => const SelectionUiModel(
+      canPop: false,
       selectedAnnotationTaskKind: AnnotationTaskKind.sample,
       annotationTaskUrl: "https://ikut-annotation-sample.web.app/task.yaml",
-      progress: false,
+      progress: true,
       showAnnotationTaskGuideEffect: false,
       backEffect: false);
+
+  void setCanPopAsTrue() {
+    state = state.copyWith(canPop: true, progress: false);
+  }
 
   void setSelectedAnnotationTaskKind(AnnotationTaskKind kind) {
     state = state.copyWith(selectedAnnotationTaskKind: kind);

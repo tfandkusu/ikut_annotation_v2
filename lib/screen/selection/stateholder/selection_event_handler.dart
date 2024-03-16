@@ -14,6 +14,12 @@ class SelectionEventHandler {
   SelectionEventHandler(
       this._stateNotifier, this._repository, this._imageIndexStateNotifier);
 
+  Future<void> onCreate() async {
+    if (await _repository.hasAnnotationTask()) {
+      _stateNotifier.setCanPopAsTrue();
+    }
+  }
+
   void selectAnnotationTaskKind(AnnotationTaskKind kind) {
     _stateNotifier.setSelectedAnnotationTaskKind(kind);
   }

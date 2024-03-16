@@ -9,7 +9,8 @@ enum AnnotationTaskKind {
 @freezed
 class SelectionUiModel with _$SelectionUiModel {
   const factory SelectionUiModel(
-      {required AnnotationTaskKind selectedAnnotationTaskKind,
+      {required bool canPop,
+      required AnnotationTaskKind selectedAnnotationTaskKind,
       required String annotationTaskUrl,
       required bool progress,
       required bool showAnnotationTaskGuideEffect,
