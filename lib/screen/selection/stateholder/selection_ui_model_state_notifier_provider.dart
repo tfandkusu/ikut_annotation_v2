@@ -11,6 +11,7 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
       openSampleTaskButtonEnabled: true,
       annotationTaskUrl: "",
       progress: true,
+      openYourTaskButtonEnabled: false,
       showAnnotationTaskGuideEffect: false,
       backEffect: false);
 
@@ -21,7 +22,8 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
   void setAnnotationTaskUrl(String annotationTaskUrl) {
     state = state.copyWith(
         annotationTaskUrl: annotationTaskUrl,
-        openSampleTaskButtonEnabled: annotationTaskUrl.isEmpty);
+        openSampleTaskButtonEnabled: annotationTaskUrl.isEmpty,
+        openYourTaskButtonEnabled: annotationTaskUrl.isNotEmpty);
   }
 
   void setProgress(bool progress) {

@@ -11,7 +11,7 @@ final class LocalizationEn extends Localization {
   String get selectionOpenSampleTask => "Open sample annotation task";
 
   @override
-  String get selectionOpenYourTask => "Open your task";
+  String get selectionOpenYourTask => "Open your annotation task";
 
   @override
   String get selectionAnnotationTaskUrl => "Your annotation task URL";

@@ -42,7 +42,10 @@ class SelectionScreen extends HookConsumerWidget {
                 _sampleButton(context, uiModel.openSampleTaskButtonEnabled,
                     eventHandler, localization),
                 _yourSubtitle(context, localization),
-                _annotationTaskUrlTextField(context, eventHandler, localization)
+                _annotationTaskUrlTextField(
+                    context, eventHandler, localization),
+                _yourButton(context, uiModel.openYourTaskButtonEnabled,
+                    uiModel.annotationTaskUrl, eventHandler, localization)
               ],
             )),
         if (uiModel.progress)
@@ -102,6 +105,30 @@ class SelectionScreen extends HookConsumerWidget {
           labelText: localization.selectionAnnotationTaskUrl,
           hintText: localization.selectionAnnotationTaskUrlPlaceHolder,
         ),
+        keyboardType: TextInputType.url,
+      ),
+    );
+  }
+
+  _yourButton(
+      BuildContext context,
+      bool openYourTaskButtonEnabled,
+      String annotationTaskUrl,
+      SelectionEventHandler eventHandler,
+      Localization localization) {
+    VoidCallback? onPressed;
+    if (openYourTaskButtonEnabled) {
+      onPressed = () {
+        eventHandler.onClickYourTask(annotationTaskUrl);
+      };
+    } else {
+      onPressed = null;
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: FilledButton(
+        onPressed: onPressed,
+        child: Text(localization.selectionOpenYourTask),
       ),
     );
   }

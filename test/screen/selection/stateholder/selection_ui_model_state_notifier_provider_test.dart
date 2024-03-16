@@ -24,13 +24,14 @@ void main() {
               canPop: true,
               openSampleTaskButtonEnabled: true,
               annotationTaskUrl: "",
+              openYourTaskButtonEnabled: false,
               progress: false,
               showAnnotationTaskGuideEffect: false,
               backEffect: false));
     });
   });
   tw("setAnnotationTaskUrl", () {
-    tt("update annotationTaskUrl and openSampleTaskButtonEnabled to false", () {
+    tt("update annotationTaskUrl and button's enabled", () {
       stateNotifier.setAnnotationTaskUrl("https://");
       expect(
           getState(),
@@ -38,6 +39,7 @@ void main() {
               canPop: false,
               openSampleTaskButtonEnabled: false,
               annotationTaskUrl: "https://",
+              openYourTaskButtonEnabled: true,
               progress: true,
               showAnnotationTaskGuideEffect: false,
               backEffect: false));
