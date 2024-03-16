@@ -8,7 +8,7 @@ final class LocalizationEn extends Localization {
   String get selectionTitle => "Select annotation task";
 
   @override
-  String get selectionOpenSampleTask => "Open sample task";
+  String get selectionOpenSampleTask => "Open sample annotation task";
 
   @override
   String get selectionOpenYourTask => "Open your task";
@@ -21,4 +21,8 @@ final class LocalizationEn extends Localization {
 
   @override
   String get selectionYourSubTitle => "Your annotation task";
+
+  @override
+  String get selectionAnnotationTaskUrlPlaceHolder =>
+      "https://ikut-annotation-sample.web.app/task.yaml";
 }

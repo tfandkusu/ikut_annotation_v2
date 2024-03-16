@@ -39,7 +39,10 @@ class SelectionScreen extends HookConsumerWidget {
               padding: const EdgeInsets.all(16.0),
               children: [
                 _sampleSubtitle(context, localization),
-                _sampleButton(context, eventHandler, localization),
+                _sampleButton(context, uiModel.openSampleTaskButtonEnabled,
+                    eventHandler, localization),
+                _yourSubtitle(context, localization),
+                _annotationTaskUrlTextField(context, eventHandler, localization)
               ],
             )),
         if (uiModel.progress)
@@ -60,15 +63,45 @@ class SelectionScreen extends HookConsumerWidget {
     return Text(localization.selectionSampleSubTitle, style: style);
   }
 
-  Widget _sampleButton(BuildContext context, SelectionEventHandler eventHandler,
-      Localization localization) {
+  Widget _sampleButton(BuildContext context, bool openSampleButtonEnabled,
+      SelectionEventHandler eventHandler, Localization localization) {
+    VoidCallback? onPressed;
+    if (openSampleButtonEnabled) {
+      onPressed = () {
+        eventHandler.onClickSampleTask();
+      };
+    } else {
+      onPressed = null;
+    }
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: FilledButton(
-        onPressed: () {
-          eventHandler.onClickSampleTask();
-        },
+        onPressed: onPressed,
         child: Text(localization.selectionOpenSampleTask),
+      ),
+    );
+  }
+
+  Widget _yourSubtitle(BuildContext context, Localization localization) {
+    final style = Theme.of(context).textTheme.titleLarge;
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: Text(localization.selectionYourSubTitle, style: style),
+    );
+  }
+
+  Widget _annotationTaskUrlTextField(BuildContext context,
+      SelectionEventHandler eventHandler, Localization localization) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: TextField(
+        onChanged: (annotationTaskUrl) {
+          eventHandler.setAnnotationTaskUrl(annotationTaskUrl);
+        },
+        decoration: InputDecoration(
+          labelText: localization.selectionAnnotationTaskUrl,
+          hintText: localization.selectionAnnotationTaskUrlPlaceHolder,
+        ),
       ),
     );
   }
