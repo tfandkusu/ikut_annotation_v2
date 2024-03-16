@@ -8,7 +8,6 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
   @override
   SelectionUiModel build() => const SelectionUiModel(
       canPop: false,
-      selectedAnnotationTaskKind: AnnotationTaskKind.sample,
       annotationTaskUrl: "https://ikut-annotation-sample.web.app/task.yaml",
       progress: true,
       showAnnotationTaskGuideEffect: false,
@@ -16,10 +15,6 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
 
   void setCanPopAsTrue() {
     state = state.copyWith(canPop: true, progress: false);
-  }
-
-  void setSelectedAnnotationTaskKind(AnnotationTaskKind kind) {
-    state = state.copyWith(selectedAnnotationTaskKind: kind);
   }
 
   void setAnnotationTaskUrl(String annotationTaskUrl) {

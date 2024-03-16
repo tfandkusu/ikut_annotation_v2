@@ -1,6 +1,5 @@
 import 'package:ikut_annotation_v2/data/image_index_state_notifier_provider.dart';
 import 'package:ikut_annotation_v2/data/repository.dart';
-import 'package:ikut_annotation_v2/screen/selection/stateholder/selection_ui_model.dart';
 import 'package:ikut_annotation_v2/screen/selection/stateholder/selection_ui_model_state_notifier_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,15 +19,15 @@ class SelectionEventHandler {
     }
   }
 
-  void selectAnnotationTaskKind(AnnotationTaskKind kind) {
-    _stateNotifier.setSelectedAnnotationTaskKind(kind);
-  }
-
   void setAnnotationTaskUrl(String annotationTaskUrl) {
     _stateNotifier.setAnnotationTaskUrl(annotationTaskUrl);
   }
 
-  Future<void> onClickLoad(String taskUrl) async {
+  Future<void> onClickSampleTask() async {
+    await onClickYourTask("https://ikut-annotation-sample.web.app/task.yaml");
+  }
+
+  Future<void> onClickYourTask(String taskUrl) async {
     _stateNotifier.setProgress(true);
     await _repository.load(taskUrl);
     _imageIndexStateNotifier.reset();

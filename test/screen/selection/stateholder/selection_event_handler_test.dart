@@ -63,13 +63,6 @@ void main() {
       });
     });
   });
-  tw("selectAnnotationTaskKind", () {
-    tt("uiModel's selectedAnnotationTaskKind is updated", () {
-      eventHandler.selectAnnotationTaskKind(AnnotationTaskKind.yours);
-      verify(() => stateNotifier
-          .setSelectedAnnotationTaskKind(AnnotationTaskKind.yours));
-    });
-  });
   tw("setAnnotationTaskUrl", () {
     tt("uiModel's annotationTaskUrl is updated", () {
       const annotationTaskUrl = "https://example.com/task.yaml";
@@ -77,12 +70,26 @@ void main() {
       verify(() => stateNotifier.setAnnotationTaskUrl(annotationTaskUrl));
     });
   });
-  tw("onClickLoad", () {
+  tw("onClickSampleTask", () {
+    tt("AnnotationTask is loaded, image's index is reset and back to main",
+        () async {
+      const sampleTaskUrl = "https://ikut-annotation-sample.web.app/task.yaml";
+      when(() => repository.load(sampleTaskUrl)).thenAnswer((_) async {});
+      await eventHandler.onClickSampleTask();
+      verifyInOrder([
+        () => stateNotifier.setProgress(true),
+        () => repository.load(sampleTaskUrl),
+        () => imageIndexStateNotifier.reset(),
+        () => stateNotifier.setBackEffect(true),
+      ]);
+    });
+  });
+  tw("onClickYourTask", () {
     tt("AnnotationTask is loaded, image's index is reset and back to main",
         () async {
       const taskUrl = "https://example.com/task.yaml";
       when(() => repository.load(taskUrl)).thenAnswer((_) async {});
-      await eventHandler.onClickLoad(taskUrl);
+      await eventHandler.onClickYourTask(taskUrl);
       verifyInOrder([
         () => stateNotifier.setProgress(true),
         () => repository.load(taskUrl),
