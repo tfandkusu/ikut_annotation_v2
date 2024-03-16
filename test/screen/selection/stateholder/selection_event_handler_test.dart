@@ -49,7 +49,7 @@ void main() {
         when(() => repository.hasAnnotationTask())
             .thenAnswer((_) async => true);
         await eventHandler.onCreate();
-        verify(() => stateNotifier.setCanPopAsTrue());
+        verify(() => stateNotifier.setCanPop(true));
       });
     });
   });
@@ -59,7 +59,7 @@ void main() {
         when(() => repository.hasAnnotationTask())
             .thenAnswer((_) async => false);
         await eventHandler.onCreate();
-        verifyNever(() => stateNotifier.setCanPopAsTrue());
+        verify(() => stateNotifier.setCanPop(false));
       });
     });
   });

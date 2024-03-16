@@ -25,7 +25,34 @@ class SelectionScreen extends HookConsumerWidget {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(localization.selectionTitle),
           ),
-          body: const Text("SelectionScreen")),
+          body: Stack(children: [
+            ListView(
+              padding: const EdgeInsets.all(16.0),
+              children: [
+                _sampleSubtitle(context, localization),
+                _sampleButton(context, eventHandler, localization),
+              ],
+            ),
+            if (uiModel.progress) const Center(child: CircularProgressIndicator()),
+          ])),
+    );
+  }
+
+  Widget _sampleSubtitle(BuildContext context, Localization localization) {
+    final style = Theme.of(context).textTheme.titleLarge;
+    return Text(localization.selectionSampleSubTitle, style: style);
+  }
+
+  Widget _sampleButton(BuildContext context, SelectionEventHandler eventHandler,
+      Localization localization) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: FilledButton(
+        onPressed: () {
+          eventHandler.onClickSampleTask();
+        },
+        child: Text(localization.selectionOpenSampleTask),
+      ),
     );
   }
 }

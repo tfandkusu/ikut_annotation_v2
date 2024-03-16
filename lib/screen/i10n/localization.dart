@@ -10,4 +10,9 @@ Localization localization(LocalizationRef ref) {
 abstract base class Localization {
   String get appName;
   String get selectionTitle;
+  String get selectionSampleSubTitle;
+  String get selectionOpenSampleTask;
+  String get selectionYourSubTitle;
+  String get selectionAnnotationTaskUrl;
+  String get selectionOpenYourTask;
 }

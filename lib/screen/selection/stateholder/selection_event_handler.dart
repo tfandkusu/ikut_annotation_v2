@@ -14,9 +14,7 @@ class SelectionEventHandler {
       this._stateNotifier, this._repository, this._imageIndexStateNotifier);
 
   Future<void> onCreate() async {
-    if (await _repository.hasAnnotationTask()) {
-      _stateNotifier.setCanPopAsTrue();
-    }
+    _stateNotifier.setCanPop(await _repository.hasAnnotationTask());
   }
 
   void setAnnotationTaskUrl(String annotationTaskUrl) {

@@ -13,8 +13,8 @@ class SelectionUiModelStateNotifier extends _$SelectionUiModelStateNotifier {
       showAnnotationTaskGuideEffect: false,
       backEffect: false);
 
-  void setCanPopAsTrue() {
-    state = state.copyWith(canPop: true, progress: false);
+  void setCanPop(canPop) {
+    state = state.copyWith(canPop: canPop, progress: false);
   }
 
   void setAnnotationTaskUrl(String annotationTaskUrl) {
