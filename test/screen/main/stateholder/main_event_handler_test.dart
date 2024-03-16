@@ -43,14 +43,13 @@ void main() {
   });
   tg("Annotation task is loaded", () {
     tw("onCreate", () {
-      tt("setShowAnnotationTaskSelectionEffect(true) is called", () async {
+      tt("setShowAnnotationTaskSelectionEffect(true) is not called", () async {
         when(() => repository.hasAnnotationTask())
             .thenAnswer((_) async => true);
         await eventHandler.onCreate();
-        verifyInOrder([
-          () => repository.hasAnnotationTask(),
-          () => stateNotifier.setShowAnnotationTaskSelectionEffect(true),
-        ]);
+        verifyInOrder([() => repository.hasAnnotationTask()]);
+        verifyNever(
+            () => stateNotifier.setShowAnnotationTaskSelectionEffect(true));
       });
     });
   });
@@ -60,17 +59,11 @@ void main() {
         when(() => repository.hasAnnotationTask())
             .thenAnswer((_) async => false);
         await eventHandler.onCreate();
-        verifyInOrder([() => repository.hasAnnotationTask()]);
-        verifyNever(
-            () => stateNotifier.setShowAnnotationTaskSelectionEffect(true));
+        verifyInOrder([
+          () => repository.hasAnnotationTask(),
+          () => stateNotifier.setShowAnnotationTaskSelectionEffect(true),
+        ]);
       });
-    });
-  });
-  tw("onNavigateToSelection", () {
-    tt("StateNotifier#setShowAnnotationTaskSelectionEffect(false) is called",
-        () {
-      eventHandler.onNavigateToSelection();
-      verify(() => stateNotifier.setShowAnnotationTaskSelectionEffect(false));
     });
   });
   tw("move", () {

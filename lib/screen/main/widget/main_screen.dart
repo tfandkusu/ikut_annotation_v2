@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model_provider.dart';
 import 'package:ikut_annotation_v2/screen/main/widget/image_widget.dart';
+import 'package:ikut_annotation_v2/util/view/check_one_shot_operation.dart';
 
 import '../../i10n/localization.dart';
 import '../stateholder/main_event_handler.dart';
@@ -22,6 +23,16 @@ class MainScreen extends HookConsumerWidget {
       eventHandler.onCreate();
       return () {};
     }, const []);
+    ref.listen(mainUiModelProvider, (previous, next) {
+      checkOneShotOperation(previous, next,
+          (uiModel) => uiModel.showAnnotationTaskSelectionEffect,
+          (showAnnotationTaskSelectionEffect) {
+        if (showAnnotationTaskSelectionEffect) {
+          Navigator.pushNamed(context, '/selection');
+          eventHandler.onNavigateToAnnotationJobSelection();
+        }
+      });
+    });
     final stackChildren = <Widget>[];
     if (uiModel.isLoaded()) {
       final currentImage = uiModel.getCurrentImage();
