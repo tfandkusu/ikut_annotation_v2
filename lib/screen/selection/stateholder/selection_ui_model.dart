@@ -5,6 +5,7 @@ part 'selection_ui_model.freezed.dart';
 class SelectionUiModel with _$SelectionUiModel {
   const factory SelectionUiModel(
       {required bool canPop,
+      required bool openSampleTaskButtonEnabled,
       required String annotationTaskUrl,
       required bool progress,
       required bool showAnnotationTaskGuideEffect,
