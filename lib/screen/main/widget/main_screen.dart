@@ -7,6 +7,7 @@ import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model.dart';
 import 'package:ikut_annotation_v2/screen/main/stateholder/main_ui_model_provider.dart';
 import 'package:ikut_annotation_v2/screen/main/widget/image_widget.dart';
 import 'package:ikut_annotation_v2/util/view/check_one_shot_operation.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../i10n/localization.dart';
 import '../stateholder/main_event_handler.dart';
@@ -31,6 +32,11 @@ class MainScreen extends HookConsumerWidget {
           Navigator.pushNamed(context, '/selection');
           eventHandler.onNavigateToAnnotationJobSelection();
         }
+      });
+      checkOneShotOperation(
+          previous, next, (uiModel) => uiModel.callSendAppEffect, (yaml) {
+        eventHandler.onSendToApp();
+        Share.share(yaml, subject: "Annotated Images");
       });
     });
     final stackChildren = <Widget>[];
@@ -91,6 +97,13 @@ class MainScreen extends HookConsumerWidget {
                   Navigator.pushNamed(context, '/selection');
                 },
               ),
+              IconButton(
+                onPressed: () {
+                  eventHandler.onClickSend();
+                },
+                icon: const Icon(Icons.send),
+                tooltip: localization.sendFromMailApp,
+              )
             ],
           ),
           body: Stack(

@@ -10,7 +10,8 @@ class MainUiModel with _$MainUiModel {
       required int previousImageIndex,
       required List<String> labels,
       required bool progress,
-      required bool showAnnotationTaskSelectionEffect}) = _MainUiModel;
+      required bool showAnnotationTaskSelectionEffect,
+      required String? callSendAppEffect}) = _MainUiModel;
 }
 
 extension MainUiModelExtension on MainUiModel {

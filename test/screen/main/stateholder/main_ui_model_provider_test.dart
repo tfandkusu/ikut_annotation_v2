@@ -46,7 +46,8 @@ void main() {
                 previousImageIndex: 0,
                 labels: labels,
                 progress: false,
-                showAnnotationTaskSelectionEffect: false));
+                showAnnotationTaskSelectionEffect: false,
+                callSendAppEffect: null));
       });
     });
   });
@@ -68,7 +69,8 @@ void main() {
                 previousImageIndex: 0,
                 labels: [],
                 progress: true,
-                showAnnotationTaskSelectionEffect: false));
+                showAnnotationTaskSelectionEffect: false,
+                callSendAppEffect: null));
       });
     });
   });

@@ -38,4 +38,7 @@ final class LocalizationEn extends Localization {
 
   @override
   String get ok => "Ok";
+
+  @override
+  String get sendFromMailApp => "Send work by mail app, etc.";
 }
