@@ -1,4 +1,4 @@
-# iKut Annotation - How to define an annotation job
+# iKut Annotation - How to define an annotation task
 
 # What is iKut Annotation
 
@@ -7,16 +7,16 @@ Labeling workers can manually annotates label to multiple images.
 
 # Overview
 
-This document describes how developers define an annotation job.
+This document describes how developers define an annotation task.
 
-# Annotation job configuration
+# Annotation task configuration
 
-An annotation job consists of the following files.
+An annotation task consists of the following files.
 
 - A YAML file
 - Image files
 
-Both must be HTTPS hosted. Workers can start an annotation job by entering the URL of athe YAML file.
+Both must be HTTPS hosted. Workers can start an annotation task by entering the URL of athe YAML file.
 
 ## A YAML file
 
