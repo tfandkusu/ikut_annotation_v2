@@ -94,4 +94,22 @@ void main() {
       verify(() => stateNotifier.setShowAnnotationTaskSelectionEffect(false));
     });
   });
+  tw("onClickSend", () {
+    tt("YAML string is sent", () async {
+      when(
+        () => repository.getYaml(),
+      ).thenAnswer((_) async => "some YAML string");
+      await eventHandler.onClickSend();
+      verifyInOrder([
+        () => repository.getYaml(),
+        () => stateNotifier.setCallSendAppEffect("some YAML string"),
+      ]);
+    });
+  });
+  tw("onSendToApp", () {
+    tt("callSendAppEffect is null", () {
+      eventHandler.onSendToApp();
+      verify(() => stateNotifier.setCallSendAppEffect(null));
+    });
+  });
 }

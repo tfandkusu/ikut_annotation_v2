@@ -35,6 +35,15 @@ class MainEventHandler {
   void onNavigateToAnnotationJobSelection() {
     _stateHolder.setShowAnnotationTaskSelectionEffect(false);
   }
+
+  Future<void> onClickSend() async {
+    final yaml = await _repository.getYaml();
+    _stateHolder.setCallSendAppEffect(yaml);
+  }
+
+  void onSendToApp() {
+    _stateHolder.setCallSendAppEffect(null);
+  }
 }
 
 @riverpod

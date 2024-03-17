@@ -25,7 +25,8 @@ void main() {
               previousImageIndex: 0,
               labels: [],
               progress: true,
-              showAnnotationTaskSelectionEffect: true));
+              showAnnotationTaskSelectionEffect: true,
+              callSendAppEffect: null));
     });
   });
 }
