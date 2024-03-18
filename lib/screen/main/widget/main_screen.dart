@@ -195,7 +195,7 @@ class MainScreen extends HookConsumerWidget {
       textColor = Theme.of(context).colorScheme.onPrimary.withOpacity(0.5);
     }
     final textStyle =
-        Theme.of(context).textTheme.titleLarge?.copyWith(color: textColor);
+        Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor);
     return TextButton(
         onPressed: onTap,
         style: TextButton.styleFrom(
