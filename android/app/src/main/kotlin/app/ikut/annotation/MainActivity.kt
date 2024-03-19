@@ -1,4 +1,4 @@
-package com.example.ikut_annotation_v2
+package app.ikut.annotation
 
 import io.flutter.embedding.android.FlutterActivity
 
