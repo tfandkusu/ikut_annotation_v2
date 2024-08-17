@@ -59,10 +59,10 @@ class MainScreen extends HookConsumerWidget {
     }
     return Focus(
       autofocus: true,
-      onKey: (node, event) {
+      onKeyEvent: (node, event) {
         if (uiModel.isLoaded()) {
           final currentImage = uiModel.getCurrentImage();
-          if (event is RawKeyDownEvent) {
+          if (event is KeyDownEvent) {
             if (event.logicalKey.keyLabel == ']') {
               eventHandler.move(diff: 1, imagesLength: uiModel.images.length);
             } else if (event.logicalKey.keyLabel == '[') {
