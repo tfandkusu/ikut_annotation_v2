@@ -39,6 +39,6 @@ jobs:
       # 単体テストの実行とカバレッジレポートの出力
       - run: flutter test --coverage
       # カバレッジレポートをCodecovに送る
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
